@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FutsalManager.Domain", "FutsalManager.Domain\FutsalManager.Domain.csproj", "{C4FB05F0-7650-487E-AC3C-7273B8575781}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FutsalManager.Droid", "FutsalManager.Droid\FutsalManager.Droid.csproj", "{C1D4DD73-9945-4BE3-9A77-7B4B539BBB6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FutsalManager.Persistence", "FutsalManager.Persistence\FutsalManager.Persistence.csproj", "{7A75DDD8-DC94-4F68-A748-DC75FB8BDBB6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C4FB05F0-7650-487E-AC3C-7273B8575781}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4FB05F0-7650-487E-AC3C-7273B8575781}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4FB05F0-7650-487E-AC3C-7273B8575781}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4FB05F0-7650-487E-AC3C-7273B8575781}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1D4DD73-9945-4BE3-9A77-7B4B539BBB6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1D4DD73-9945-4BE3-9A77-7B4B539BBB6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1D4DD73-9945-4BE3-9A77-7B4B539BBB6F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{C1D4DD73-9945-4BE3-9A77-7B4B539BBB6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1D4DD73-9945-4BE3-9A77-7B4B539BBB6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1D4DD73-9945-4BE3-9A77-7B4B539BBB6F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{7A75DDD8-DC94-4F68-A748-DC75FB8BDBB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A75DDD8-DC94-4F68-A748-DC75FB8BDBB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A75DDD8-DC94-4F68-A748-DC75FB8BDBB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A75DDD8-DC94-4F68-A748-DC75FB8BDBB6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

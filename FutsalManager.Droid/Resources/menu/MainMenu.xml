@@ -1,0 +1,6 @@
+﻿<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:id="@+id/maintainPlayer"
+  android:icon="@drawable/ic_new"
+    android:title="Maintain Players"
+    android:showAsAction="ifRoom" />
+</menu>
