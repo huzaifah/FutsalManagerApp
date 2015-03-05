@@ -17,7 +17,7 @@ namespace FutsalManager.Persistence
     public class TournamentRepository : ITournamentRepository
     {
         private readonly SQLiteConnection db;
-        private List<PlayerDto> _players;
+        //private List<PlayerDto> _players;
 
         public TournamentRepository(string databasePath)
         {
@@ -26,7 +26,7 @@ namespace FutsalManager.Persistence
             if (!File.Exists(databasePath))
                 CreateNewTables();
 
-            RefreshPlayerCache();
+            //RefreshPlayerCache();
         }
 
         public void CreateNewTables()
@@ -40,34 +40,40 @@ namespace FutsalManager.Persistence
             db.CreateTable<Scores>();
         }
 
-        public IReadOnlyList<PlayerDto> Players
+        //public IReadOnlyList<PlayerDto> Players
+        //{
+        //    get
+        //    {
+        //        if (_players == null)
+        //            _players = new List<PlayerDto>();
+
+        //        return _players;
+        //    }
+        //}
+
+        //public void RefreshPlayerCache()
+        //{
+        //    if (_players == null)
+        //        _players = new List<PlayerDto>();
+
+        //    _players.Clear();
+        //    _players = db.Query<Players>("Select * from Players order by Name").ConvertAll(t => t.ConvertToDto());
+
+        //    for (int i = 0; i < _players.Count; i++)
+        //    {
+        //        _players[i].ListItemId = i + 1;
+        //    }
+        //}
+
+        //public PlayerDto GetPlayerByItemId(long itemId)
+        //{
+        //    return _players.Single(x => x.ListItemId == itemId);
+        //}
+
+        public IEnumerable<PlayerDto> GetAllPlayers()
         {
-            get
-            {
-                if (_players == null)
-                    _players = new List<PlayerDto>();
-
-                return _players;
-            }
-        }
-
-        public void RefreshPlayerCache()
-        {
-            if (_players == null)
-                _players = new List<PlayerDto>();
-
-            _players.Clear();
-            _players = db.Query<Players>("Select * from Players order by Name").ConvertAll(t => t.ConvertToDto());
-
-            for (int i = 0; i < _players.Count; i++)
-            {
-                _players[i].ListItemId = i + 1;
-            }
-        }
-
-        public PlayerDto GetPlayerByItemId(long itemId)
-        {
-            return _players.Single(x => x.ListItemId == itemId);
+            var tournaments = db.Query<Players>("Select * from Players order by Name");
+            return tournaments.ConvertAll(p => p.ConvertToDto());
         }
 
         public IEnumerable<TournamentDto> GetAll()

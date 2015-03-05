@@ -1,4 +1,5 @@
-﻿using FutsalManager.Domain.Entity;
+﻿using FutsalManager.Domain.Dtos;
+using FutsalManager.Domain.Entity;
 using FutsalManager.Domain.Enum;
 using FutsalManager.Domain.Exceptions;
 using FutsalManager.Domain.Helpers;
@@ -14,10 +15,42 @@ namespace FutsalManager.Domain
     public class TournamentService
     {
         private readonly ITournamentRepository tournamentRepo;
+        private List<PlayerDto> _players;
 
         public TournamentService(ITournamentRepository repo)
         {
             tournamentRepo = repo;
+            RefreshPlayerCache();
+        }
+
+        public IReadOnlyList<PlayerDto> Players
+        {
+            get
+            {
+                if (_players == null)
+                    _players = new List<PlayerDto>();
+
+                return _players;
+            }
+        }
+
+        public void RefreshPlayerCache()
+        {
+            if (_players == null)
+                _players = new List<PlayerDto>();
+
+            _players.Clear();
+            _players = tournamentRepo.GetAllPlayers().ToList();
+
+            for (int i = 0; i < _players.Count; i++)
+            {
+                _players[i].ListItemId = i + 1;
+            }
+        }
+
+        public PlayerDto GetPlayerByItemId(long itemId)
+        {
+            return _players.Single(x => x.ListItemId == itemId);
         }
 
         public string CreateTournament(Tournament tournament)
@@ -123,5 +156,14 @@ namespace FutsalManager.Domain
             return teamList.ToList().ConvertAll(t => t.ConvertToEntity());
         }
 
+        public PlayerDto GetPlayerById(string playerId)
+        {
+            return tournamentRepo.GetPlayerById(playerId);
+        }
+
+        public string AddEditPlayer(PlayerDto player)
+        {
+            return tournamentRepo.AddEditPlayer(player);
+        }
     }
 }

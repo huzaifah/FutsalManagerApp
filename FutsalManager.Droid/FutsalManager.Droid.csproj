@@ -67,19 +67,19 @@
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
-    <AndroidResource Include="Resources\layout-land\Main.axml" />
-    <AndroidResource Include="Resources\layout-land\PlayerTourList.axml">
+    <AndroidResource Include="Resources\layout\PlayerTourList.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout-land\PlayerListItem.axml">
+    <AndroidResource Include="Resources\layout\PlayerListItem.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout-land\PlayerDetail.axml">
+    <AndroidResource Include="Resources\layout\PlayerDetail.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout-land\TournamentSetup.axml">
+    <AndroidResource Include="Resources\layout\TournamentSetup.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\Main.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
@@ -107,9 +107,7 @@
       <Name>FutsalManager.Persistence</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\layout\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
      Other similar extension points exist, see Microsoft.Common.targets.

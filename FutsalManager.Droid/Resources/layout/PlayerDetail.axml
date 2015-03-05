@@ -30,6 +30,21 @@
             p1:layout_height="wrap_content"
             p1:id="@+id/positionEditText" />
         <TextView
+            p1:text="Birth Date"
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/textView4" />
+        <EditText
+            p1:inputType="date"
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/birthDateEditText" />
+        <Button
+            p1:text="Pick a Date"
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/pickDateButton" />
+        <TextView
             p1:text="Age"
             p1:layout_width="match_parent"
             p1:layout_height="wrap_content"
@@ -38,6 +53,7 @@
             p1:inputType="number"
             p1:layout_width="match_parent"
             p1:layout_height="wrap_content"
-            p1:id="@+id/ageEditText" />
+            p1:id="@+id/ageEditText"
+            p1:enabled="false" />
     </LinearLayout>
 </ScrollView>

@@ -12,17 +12,22 @@ using Android.Widget;
 using Android.Content.PM;
 using FutsalManager.Domain.Dtos;
 using FutsalManager.Droid.Adapters;
+using System.Globalization;
 
 namespace FutsalManager.Droid
 {
     [Activity(Label = "Player Profile", ScreenOrientation = ScreenOrientation.Landscape)]
-    public class PlayerDetailActivity : Activity
+    public class PlayerDetailActivity : Activity, DatePickerDialog.IOnDateSetListener
     {
         PlayerDto _player;
 
         EditText _nameEditText;
         EditText _positionEditText;
         EditText _ageEditText;
+        EditText _birthDateEditText;
+        Button _pickDateButton;
+
+        const int DATE_DIALOG_ID = 0;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -34,6 +39,10 @@ namespace FutsalManager.Droid
             _nameEditText = FindViewById<EditText>(Resource.Id.nameEditText);
             _positionEditText = FindViewById<EditText>(Resource.Id.positionEditText);
             _ageEditText = FindViewById<EditText>(Resource.Id.ageEditText);
+            _birthDateEditText = FindViewById<EditText>(Resource.Id.birthDateEditText);
+            _pickDateButton = FindViewById<Button>(Resource.Id.pickDateButton);
+
+            _birthDateEditText.Text = DateTime.Now.ToString("dd/MM/yyyy");
 
             if (Intent.HasExtra("playerId"))
             {
@@ -43,14 +52,27 @@ namespace FutsalManager.Droid
             else
                 _player = new PlayerDto();
 
+            _pickDateButton.Click += delegate { ShowDialog(DATE_DIALOG_ID); };
+
             UpdateUI();
+        }
+              
+        protected override Dialog OnCreateDialog(int id)
+        {
+            switch (id)
+            {
+                case DATE_DIALOG_ID:
+                    return new DatePickerDialog(this, OnDateSetEvent, DateTime.Now.Year, DateTime.Now.Month - 1, DateTime.Now.Day);
+            }
+            return null;
         }
 
         private void UpdateUI()
         {
             _nameEditText.Text = _player.Name;
             _positionEditText.Text = _player.Position;
-            _ageEditText.Text = "??";
+            _ageEditText.Text = _player.Age.ToString();
+            _birthDateEditText.Text = _player.BirthDate.ToString("dd-MM-yyyy");
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -113,11 +135,22 @@ namespace FutsalManager.Droid
 
             _player.Name = _nameEditText.Text;
             _player.Position = _positionEditText.Text;
+            _player.BirthDate = DateTime.ParseExact(_birthDateEditText.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
             AppData.Service.AddEditPlayer(_player);
             var toast = Toast.MakeText(this, String.Format("{0} saved.", _player.Name), ToastLength.Short);
             toast.Show();
             Finish();
+        }
+
+        public void OnDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+        {            
+        }
+
+        // the event received when the user "sets" the date in the dialog
+        private void OnDateSetEvent(object sender, DatePickerDialog.DateSetEventArgs e)
+        {
+            _birthDateEditText.Text = e.Date.ToString("dd/MM/yyyy");
         }
     }
 }

@@ -40,7 +40,9 @@ namespace FutsalManager.Persistence.Helpers
             return new PlayerDto
             {
                 Id = player.Id.ToString(),
-                Name = player.Name
+                Name = player.Name,
+                Position = player.Position,
+                BirthDate = player.BirthDate
                 //TeamId = player.TeamId,
                 //TournamentId = player.TournamentId
             };
@@ -51,7 +53,9 @@ namespace FutsalManager.Persistence.Helpers
             return new Players
             {
                 Id = Guid.Parse(player.Id),
-                Name = player.Name
+                Name = player.Name,
+                Position = player.Position,
+                BirthDate = player.BirthDate
                 //TeamId = player.TeamId,
                 //TournamentId = player.TournamentId
             };

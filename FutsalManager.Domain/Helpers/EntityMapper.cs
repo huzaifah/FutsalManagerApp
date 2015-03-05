@@ -38,6 +38,8 @@ namespace FutsalManager.Domain.Helpers
             {
                 Id = player.Id,
                 Name = player.Name,
+                BirthDate = player.BirthDate,
+                Position = player.Position,
                 TeamId = player.TeamId,
                 TournamentId = player.TournamentId
             };
@@ -49,6 +51,8 @@ namespace FutsalManager.Domain.Helpers
             {
                 Id = player.Id,
                 Name = player.Name,
+                BirthDate = player.BirthDate,
+                Position = player.Position,
                 TeamId = player.TeamId,
                 TournamentId = player.TournamentId
             };

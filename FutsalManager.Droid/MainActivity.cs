@@ -9,7 +9,7 @@ using Android.Content.PM;
 
 namespace FutsalManager.Droid
 {
-    [Activity(Label = "Home", ScreenOrientation = ScreenOrientation.Landscape, Icon = "@drawable/icon")]
+    [Activity(Label = "Home", ScreenOrientation = ScreenOrientation.Landscape, MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
 

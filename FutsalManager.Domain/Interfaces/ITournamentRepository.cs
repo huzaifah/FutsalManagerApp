@@ -10,10 +10,11 @@ namespace FutsalManager.Domain.Interfaces
 {
     public interface ITournamentRepository
     {
-        IReadOnlyList<PlayerDto> Players { get; }
+        //IReadOnlyList<PlayerDto> Players { get; }
         IEnumerable<TournamentDto> GetAll();
-        void RefreshPlayerCache();
-        PlayerDto GetPlayerByItemId(long itemId);
+        IEnumerable<PlayerDto> GetAllPlayers();
+        //void RefreshPlayerCache();
+        //PlayerDto GetPlayerByItemId(long itemId);
 
         TournamentDto GetByDate(DateTime tournamentDate);
         string Add(TournamentDto tournament);
