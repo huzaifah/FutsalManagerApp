@@ -13,7 +13,7 @@ using Android.Content.PM;
 
 namespace FutsalManager.Droid
 {
-    [Activity(MainLauncher = true, ScreenOrientation = ScreenOrientation.Landscape)]
+    [Activity(ScreenOrientation = ScreenOrientation.Landscape)]
     public class TournamentSetupActivity : Activity
     {
         protected override void OnCreate(Bundle bundle)
