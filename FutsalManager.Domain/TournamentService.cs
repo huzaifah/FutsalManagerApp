@@ -163,7 +163,17 @@ namespace FutsalManager.Domain
 
         public string AddEditPlayer(PlayerDto player)
         {
-            return tournamentRepo.AddEditPlayer(player);
+            var playerId = tournamentRepo.AddEditPlayer(player);
+
+            if (String.IsNullOrEmpty(player.Id))
+            {
+                player.Id = playerId;
+                player.ListItemId = _players.Count + 1;
+
+                _players.Add(player);
+            }
+
+            return playerId;
         }
     }
 }

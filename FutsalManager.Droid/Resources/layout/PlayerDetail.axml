@@ -34,11 +34,10 @@
             p1:layout_width="match_parent"
             p1:layout_height="wrap_content"
             p1:id="@+id/textView4" />
-        <EditText
-            p1:inputType="date"
+        <TextView
             p1:layout_width="match_parent"
             p1:layout_height="wrap_content"
-            p1:id="@+id/birthDateEditText" />
+            p1:id="@+id/birthDateTextView" />
         <Button
             p1:text="Pick a Date"
             p1:layout_width="match_parent"

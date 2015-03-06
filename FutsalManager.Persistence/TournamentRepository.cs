@@ -23,7 +23,7 @@ namespace FutsalManager.Persistence
         {
             db = new SQLiteConnection(databasePath);
 
-            if (!File.Exists(databasePath))
+            if (!db.GetTableInfo("Players").Any()) 
                 CreateNewTables();
 
             //RefreshPlayerCache();

@@ -91,7 +91,7 @@ namespace FutsalManager.Droid
 			public const int ageEditText = 2131099660;
 			
 			// aapt resource value: 0x7f060009
-			public const int birthDateEditText = 2131099657;
+			public const int birthDateTextView = 2131099657;
 			
 			// aapt resource value: 0x7f060001
 			public const int button1 = 2131099649;

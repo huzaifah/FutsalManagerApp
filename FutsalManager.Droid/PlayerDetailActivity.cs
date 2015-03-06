@@ -24,7 +24,7 @@ namespace FutsalManager.Droid
         EditText _nameEditText;
         EditText _positionEditText;
         EditText _ageEditText;
-        EditText _birthDateEditText;
+        TextView _birthDateTextView;
         Button _pickDateButton;
 
         const int DATE_DIALOG_ID = 0;
@@ -39,10 +39,10 @@ namespace FutsalManager.Droid
             _nameEditText = FindViewById<EditText>(Resource.Id.nameEditText);
             _positionEditText = FindViewById<EditText>(Resource.Id.positionEditText);
             _ageEditText = FindViewById<EditText>(Resource.Id.ageEditText);
-            _birthDateEditText = FindViewById<EditText>(Resource.Id.birthDateEditText);
+            _birthDateTextView = FindViewById<TextView>(Resource.Id.birthDateTextView);
             _pickDateButton = FindViewById<Button>(Resource.Id.pickDateButton);
 
-            _birthDateEditText.Text = DateTime.Now.ToString("dd/MM/yyyy");
+            _birthDateTextView.Text = DateTime.Now.ToString("dd/MM/yyyy");
 
             if (Intent.HasExtra("playerId"))
             {
@@ -72,7 +72,7 @@ namespace FutsalManager.Droid
             _nameEditText.Text = _player.Name;
             _positionEditText.Text = _player.Position;
             _ageEditText.Text = _player.Age.ToString();
-            _birthDateEditText.Text = _player.BirthDate.ToString("dd-MM-yyyy");
+            _birthDateTextView.Text = _player.BirthDate.ToString("dd/MM/yyyy");
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -135,7 +135,7 @@ namespace FutsalManager.Droid
 
             _player.Name = _nameEditText.Text;
             _player.Position = _positionEditText.Text;
-            _player.BirthDate = DateTime.ParseExact(_birthDateEditText.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            _player.BirthDate = DateTime.ParseExact(_birthDateTextView.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
             AppData.Service.AddEditPlayer(_player);
             var toast = Toast.MakeText(this, String.Format("{0} saved.", _player.Name), ToastLength.Short);
@@ -150,7 +150,7 @@ namespace FutsalManager.Droid
         // the event received when the user "sets" the date in the dialog
         private void OnDateSetEvent(object sender, DatePickerDialog.DateSetEventArgs e)
         {
-            _birthDateEditText.Text = e.Date.ToString("dd/MM/yyyy");
+            _birthDateTextView.Text = e.Date.ToString("dd/MM/yyyy");
         }
     }
 }
