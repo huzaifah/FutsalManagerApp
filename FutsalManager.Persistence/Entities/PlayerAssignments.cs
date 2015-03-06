@@ -11,5 +11,7 @@ namespace FutsalManager.Persistence.Entities
         public Guid PlayerId { get; set; }
         public Guid TeamId { get; set; }
         public Guid TournamentId { get; set; }
+        public string Attendance { get; set; }
+        public bool Paid { get; set; }
     }
 }

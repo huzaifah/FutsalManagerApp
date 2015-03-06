@@ -69,7 +69,7 @@ namespace FutsalManager.Droid
         protected override void OnResume()
         {
             base.OnResume();
-
+            AppData.Service.RefreshPlayerCache();
             _playerAdapter.NotifyDataSetChanged();
 
         }
