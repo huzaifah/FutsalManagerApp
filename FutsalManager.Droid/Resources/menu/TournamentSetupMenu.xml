@@ -1,0 +1,6 @@
+﻿<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:id="@+id/actionSaveTournament"
+  android:icon="@drawable/ic_save"
+      android:title="Save"
+      android:showAsAction="ifRoom" />
+</menu>

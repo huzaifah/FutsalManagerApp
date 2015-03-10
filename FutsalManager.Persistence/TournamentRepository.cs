@@ -17,7 +17,6 @@ namespace FutsalManager.Persistence
     public class TournamentRepository : ITournamentRepository
     {
         private readonly SQLiteConnection db;
-        //private List<PlayerDto> _players;
 
         public TournamentRepository(string databasePath)
         {
@@ -25,8 +24,6 @@ namespace FutsalManager.Persistence
 
             if (!db.GetTableInfo("Players").Any()) 
                 CreateNewTables();
-
-            //RefreshPlayerCache();
         }
 
         public void CreateNewTables()
@@ -39,41 +36,24 @@ namespace FutsalManager.Persistence
             db.CreateTable<Matchs>();
             db.CreateTable<Scores>();
         }
-
-        //public IReadOnlyList<PlayerDto> Players
-        //{
-        //    get
-        //    {
-        //        if (_players == null)
-        //            _players = new List<PlayerDto>();
-
-        //        return _players;
-        //    }
-        //}
-
-        //public void RefreshPlayerCache()
-        //{
-        //    if (_players == null)
-        //        _players = new List<PlayerDto>();
-
-        //    _players.Clear();
-        //    _players = db.Query<Players>("Select * from Players order by Name").ConvertAll(t => t.ConvertToDto());
-
-        //    for (int i = 0; i < _players.Count; i++)
-        //    {
-        //        _players[i].ListItemId = i + 1;
-        //    }
-        //}
-
-        //public PlayerDto GetPlayerByItemId(long itemId)
-        //{
-        //    return _players.Single(x => x.ListItemId == itemId);
-        //}
-
+        
         public IEnumerable<PlayerDto> GetAllPlayers()
         {
-            var tournaments = db.Query<Players>("Select * from Players order by Name");
-            return tournaments.ConvertAll(p => p.ConvertToDto());
+            var players = db.Query<Players>("Select * from Players order by Name");
+            var playerList = players.ConvertAll(p => p.ConvertToDto());
+
+            for (int i = 0; i < playerList.Count; i++)            
+            {
+                var player = playerList[i];
+
+                var playerId = Guid.Parse(player.Id);
+
+                var scores = db.Table<Scores>().Count(s => s.PlayerId == playerId);                
+                player.TotalGoals = Convert.ToInt64(scores);
+                
+            }
+
+            return playerList;
         }
 
         public IEnumerable<TournamentDto> GetAll()
@@ -88,10 +68,24 @@ namespace FutsalManager.Persistence
             return tournament.ConvertToDto();
         }
 
-        public string Add(TournamentDto tournament)
+        public TournamentDto GetById(string tournamentId)
         {
-            tournament.Id = Guid.NewGuid().ToString();
-            db.Insert(tournament.ConvertToDb(), typeof(Tournaments));
+            var tournament = db.Table<Tournaments>().FirstOrDefault(x => x.Id == Guid.Parse(tournamentId));
+            return tournament.ConvertToDto();
+        }
+
+        public string AddEdit(TournamentDto tournament)
+        {
+            if (String.IsNullOrEmpty(tournament.Id))
+            {
+                tournament.Id = Guid.NewGuid().ToString();
+                db.Insert(tournament.ConvertToDb(), typeof(Tournaments));
+            }
+            else
+            {
+                db.Update(tournament.ConvertToDb(), typeof(Tournaments));
+            }
+                
             return tournament.Id;
         }
 
@@ -142,6 +136,20 @@ namespace FutsalManager.Persistence
             return player.Id;
         }
 
+        public void UpdatePlayerByTournament(PlayerDto player)
+        {
+            var playerAssignment = db.Table<PlayerAssignments>()
+                .SingleOrDefault(p => p.PlayerId == Guid.Parse(player.Id) && p.TournamentId == Guid.Parse(player.TournamentId));
+
+            if (playerAssignment == null)
+                throw new ApplicationException("Player " + player.Id + " not found");
+
+            playerAssignment.Attendance = player.Attendance;
+            playerAssignment.Paid = player.Paid;
+
+            db.Update(playerAssignment, typeof(PlayerAssignments));
+        }
+
         public IEnumerable<PlayerDto> GetPlayersByTeam(string tournamentId, string teamId)
         {
             Guid tournamentGuid, teamGuid = Guid.Empty;
@@ -155,7 +163,9 @@ namespace FutsalManager.Persistence
                     Id = player.PlayerId.ToString(),
                     Name = GetPlayerById(player.PlayerId).Name,
                     TeamId = player.TeamId.ToString(),
-                    TournamentId = player.TournamentId.ToString()
+                    TournamentId = player.TournamentId.ToString(),
+                    Attendance = player.Attendance,
+                    Paid = player.Paid
                 });
 
             return playerList;

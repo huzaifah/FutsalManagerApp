@@ -13,11 +13,13 @@ namespace FutsalManager.Domain.Interfaces
         //IReadOnlyList<PlayerDto> Players { get; }
         IEnumerable<TournamentDto> GetAll();
         IEnumerable<PlayerDto> GetAllPlayers();
+        void UpdatePlayerByTournament(PlayerDto player);
         //void RefreshPlayerCache();
         //PlayerDto GetPlayerByItemId(long itemId);
 
         TournamentDto GetByDate(DateTime tournamentDate);
-        string Add(TournamentDto tournament);
+        TournamentDto GetById(string tournamentId);
+        string AddEdit(TournamentDto tournament);
         IEnumerable<PlayerDto> GetPlayersByName(string playerName);
         PlayerDto GetPlayerById(string playerId);
         string AddEditTeam(TeamDto team);

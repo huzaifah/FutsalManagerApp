@@ -12,6 +12,7 @@ namespace FutsalManager.Domain.Entity
         public DateTime Date { get; set; }
         public int TotalTeam { get; set; }
         public int MaxPlayerPerTeam { get; set; }
+        public bool Completed { get; set; }
         
         /*        
         private List<Team> Teams { get; set; }

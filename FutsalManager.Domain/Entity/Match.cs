@@ -14,6 +14,7 @@ namespace FutsalManager.Domain.Entity
         public Team HomeTeam { get; set; }
         public Team AwayTeam { get; set; }
         public bool IsCompleted { get; set; }
+        public string Type { get; set; } // i.e. Final or 3rdPlacing
 
         /*
         private List<Score> Scores { get; set; }

@@ -15,6 +15,9 @@ namespace FutsalManager.Domain.Dtos
         public DateTime BirthDate { get; set; }
         public string TeamId { get; set; }
         public string TournamentId { get; set; }
+        public string Attendance { get; set; }
+        public bool Paid { get; set; }
+        public long TotalGoals { get; set; }
 
         public int Age
         {

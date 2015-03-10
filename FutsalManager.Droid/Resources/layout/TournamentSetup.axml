@@ -4,19 +4,24 @@
     p1:minHeight="25px"
     p1:layout_width="match_parent"
     p1:layout_height="match_parent"
-    p1:id="@+id/relativeLayout1">
+    p1:id="@+id/relativeLayout1"
+    p1:padding="5dp">
     <TextView
-        p1:text="Select Tournament Date"
+        p1:text="Select Tournament Date:"
         p1:textAppearance="?android:attr/textAppearanceLarge"
         p1:layout_width="wrap_content"
         p1:layout_height="wrap_content"
-        p1:id="@+id/textView1"
-        p1:layout_centerVertical="false"
-        p1:layout_centerHorizontal="true" />
-    <EditText
-        p1:inputType="date"
+        p1:id="@+id/textView1" />
+    <TextView
+        p1:text="Date"
         p1:layout_width="wrap_content"
         p1:layout_height="wrap_content"
-        p1:layout_below="@id/textView1"
-        p1:id="@+id/editText1" />
+        p1:id="@+id/dateTextView"
+        p1:layout_below="@id/textView1" />
+    <Button
+        p1:text="Pick a Date"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/pickDateButton"
+        p1:layout_alignParentRight="true"
+        p1:layout_width="150dp" />
 </RelativeLayout>

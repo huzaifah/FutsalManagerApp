@@ -13,5 +13,6 @@ namespace FutsalManager.Domain.Dtos
         public TeamDto HomeTeam { get; set; }
         public TeamDto AwayTeam { get; set; }
         public bool IsCompleted { get; set; }
+        public string Type { get; set; }
     }
 }

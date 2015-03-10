@@ -34,6 +34,22 @@ namespace FutsalManager.Droid
 			global::SQLite.Resource.String.Hello = global::FutsalManager.Droid.Resource.String.Hello;
 		}
 		
+		public partial class Array
+		{
+			
+			// aapt resource value: 0x7f050000
+			public const int position_array = 2131034112;
+			
+			static Array()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Array()
+			{
+			}
+		}
+		
 		public partial class Attribute
 		{
 			
@@ -78,77 +94,80 @@ namespace FutsalManager.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f060015
-			public const int actionDeletePlayer = 2131099669;
+			// aapt resource value: 0x7f070015
+			public const int actionDeletePlayer = 2131165205;
 			
-			// aapt resource value: 0x7f060017
-			public const int actionPlayerRefresh = 2131099671;
+			// aapt resource value: 0x7f070017
+			public const int actionPlayerRefresh = 2131165207;
 			
-			// aapt resource value: 0x7f060014
-			public const int actionSavePlayer = 2131099668;
+			// aapt resource value: 0x7f070014
+			public const int actionSavePlayer = 2131165204;
 			
-			// aapt resource value: 0x7f06000c
-			public const int ageEditText = 2131099660;
+			// aapt resource value: 0x7f070018
+			public const int actionSaveTournament = 2131165208;
 			
-			// aapt resource value: 0x7f060009
-			public const int birthDateTextView = 2131099657;
+			// aapt resource value: 0x7f07000c
+			public const int ageEditText = 2131165196;
 			
-			// aapt resource value: 0x7f060001
-			public const int button1 = 2131099649;
+			// aapt resource value: 0x7f070009
+			public const int birthDateTextView = 2131165193;
 			
-			// aapt resource value: 0x7f060012
-			public const int editText1 = 2131099666;
+			// aapt resource value: 0x7f070012
+			public const int dateTextView = 2131165202;
 			
-			// aapt resource value: 0x7f060010
-			public const int goalTextView = 2131099664;
+			// aapt resource value: 0x7f070010
+			public const int goalTextView = 2131165200;
 			
-			// aapt resource value: 0x7f060002
-			public const int imageView1 = 2131099650;
+			// aapt resource value: 0x7f070002
+			public const int imageView1 = 2131165186;
 			
-			// aapt resource value: 0x7f060004
-			public const int linearLayout1 = 2131099652;
+			// aapt resource value: 0x7f070004
+			public const int linearLayout1 = 2131165188;
 			
-			// aapt resource value: 0x7f060013
-			public const int maintainPlayer = 2131099667;
+			// aapt resource value: 0x7f070013
+			public const int maintainPlayer = 2131165203;
 			
-			// aapt resource value: 0x7f060005
-			public const int nameEditText = 2131099653;
+			// aapt resource value: 0x7f070005
+			public const int nameEditText = 2131165189;
 			
-			// aapt resource value: 0x7f06000e
-			public const int nameTextView = 2131099662;
+			// aapt resource value: 0x7f07000e
+			public const int nameTextView = 2131165198;
 			
-			// aapt resource value: 0x7f060016
-			public const int newPlayer = 2131099670;
+			// aapt resource value: 0x7f070016
+			public const int newPlayer = 2131165206;
 			
-			// aapt resource value: 0x7f06000a
-			public const int pickDateButton = 2131099658;
+			// aapt resource value: 0x7f070001
+			public const int newTournamentButton = 2131165185;
 			
-			// aapt resource value: 0x7f060011
-			public const int playerTourView = 2131099665;
+			// aapt resource value: 0x7f07000a
+			public const int pickDateButton = 2131165194;
 			
-			// aapt resource value: 0x7f060007
-			public const int positionEditText = 2131099655;
+			// aapt resource value: 0x7f070011
+			public const int playerTourView = 2131165201;
 			
-			// aapt resource value: 0x7f06000f
-			public const int positionTextView = 2131099663;
+			// aapt resource value: 0x7f070007
+			public const int positionSpinner = 2131165191;
 			
-			// aapt resource value: 0x7f06000d
-			public const int relativeLayout1 = 2131099661;
+			// aapt resource value: 0x7f07000f
+			public const int positionTextView = 2131165199;
 			
-			// aapt resource value: 0x7f060003
-			public const int scrollView1 = 2131099651;
+			// aapt resource value: 0x7f07000d
+			public const int relativeLayout1 = 2131165197;
 			
-			// aapt resource value: 0x7f060000
-			public const int textView1 = 2131099648;
+			// aapt resource value: 0x7f070003
+			public const int scrollView1 = 2131165187;
 			
-			// aapt resource value: 0x7f060006
-			public const int textView2 = 2131099654;
+			// aapt resource value: 0x7f070000
+			public const int textView1 = 2131165184;
 			
-			// aapt resource value: 0x7f06000b
-			public const int textView3 = 2131099659;
+			// aapt resource value: 0x7f070006
+			public const int textView2 = 2131165190;
 			
-			// aapt resource value: 0x7f060008
-			public const int textView4 = 2131099656;
+			// aapt resource value: 0x7f07000b
+			public const int textView3 = 2131165195;
+			
+			// aapt resource value: 0x7f070008
+			public const int textView4 = 2131165192;
 			
 			static Id()
 			{
@@ -191,14 +210,17 @@ namespace FutsalManager.Droid
 		public partial class Menu
 		{
 			
-			// aapt resource value: 0x7f050000
-			public const int MainMenu = 2131034112;
+			// aapt resource value: 0x7f060000
+			public const int MainMenu = 2131099648;
 			
-			// aapt resource value: 0x7f050001
-			public const int PlayerDetailMenu = 2131034113;
+			// aapt resource value: 0x7f060001
+			public const int PlayerDetailMenu = 2131099649;
 			
-			// aapt resource value: 0x7f050002
-			public const int PlayerListViewMenu = 2131034114;
+			// aapt resource value: 0x7f060002
+			public const int PlayerListViewMenu = 2131099650;
+			
+			// aapt resource value: 0x7f060003
+			public const int TournamentSetupMenu = 2131099651;
 			
 			static Menu()
 			{
@@ -218,6 +240,9 @@ namespace FutsalManager.Droid
 			
 			// aapt resource value: 0x7f040000
 			public const int Hello = 2130968576;
+			
+			// aapt resource value: 0x7f040002
+			public const int position_prompt = 2130968578;
 			
 			static String()
 			{

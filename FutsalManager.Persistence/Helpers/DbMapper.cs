@@ -17,7 +17,8 @@ namespace FutsalManager.Persistence.Helpers
                 Id = tournament.Id.ToString(),
                 Date = tournament.Date,
                 TotalTeam = tournament.TotalTeam,
-                MaxPlayerPerTeam = tournament.MaxPlayerPerTeam
+                MaxPlayerPerTeam = tournament.MaxPlayerPerTeam,
+                Completed = tournament.Completed
             };
         }
 
@@ -28,7 +29,8 @@ namespace FutsalManager.Persistence.Helpers
                 Id = Guid.Parse(tournament.Id),
                 Date = tournament.Date,
                 TotalTeam = tournament.TotalTeam,
-                MaxPlayerPerTeam = tournament.MaxPlayerPerTeam
+                MaxPlayerPerTeam = tournament.MaxPlayerPerTeam,
+                Completed = tournament.Completed
             };
         }
 
@@ -96,6 +98,7 @@ namespace FutsalManager.Persistence.Helpers
                 TournamentId = match.TournamentId.ToString(),
                 HomeTeam = new TeamDto { Id = match.HomeTeam.ToString() },
                 AwayTeam = new TeamDto { Id = match.AwayTeam.ToString() },
+                Type = match.Type
             };
         }
 
@@ -121,6 +124,7 @@ namespace FutsalManager.Persistence.Helpers
                 TournamentId = tournamentGuid,
                 HomeTeam = homeTeamGuid,
                 AwayTeam = awayTeamGuid,
+                Type = match.Type
             };
         }
     }

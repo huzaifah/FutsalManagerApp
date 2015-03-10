@@ -22,10 +22,11 @@ namespace FutsalManager.Droid
         PlayerDto _player;
 
         EditText _nameEditText;
-        EditText _positionEditText;
         EditText _ageEditText;
         TextView _birthDateTextView;
         Button _pickDateButton;
+        Spinner _positionSpinner;
+        ArrayAdapter _positionAdapter;
 
         const int DATE_DIALOG_ID = 0;
 
@@ -37,10 +38,15 @@ namespace FutsalManager.Droid
             SetContentView(Resource.Layout.PlayerDetail);
 
             _nameEditText = FindViewById<EditText>(Resource.Id.nameEditText);
-            _positionEditText = FindViewById<EditText>(Resource.Id.positionEditText);
             _ageEditText = FindViewById<EditText>(Resource.Id.ageEditText);
             _birthDateTextView = FindViewById<TextView>(Resource.Id.birthDateTextView);
             _pickDateButton = FindViewById<Button>(Resource.Id.pickDateButton);
+            _positionSpinner = FindViewById<Spinner>(Resource.Id.positionSpinner);
+
+            _positionSpinner.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(_positionSpinner_ItemSelected);
+            _positionAdapter = ArrayAdapter.CreateFromResource(this, Resource.Array.position_array, Android.Resource.Layout.SimpleSpinnerItem);
+            _positionAdapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+            _positionSpinner.Adapter = _positionAdapter;
 
             _birthDateTextView.Text = DateTime.Now.ToString("dd/MM/yyyy");
 
@@ -56,6 +62,11 @@ namespace FutsalManager.Droid
 
             UpdateUI();
         }
+
+        private void _positionSpinner_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
+        {
+            var positionSpinner = sender as Spinner;
+        }
               
         protected override Dialog OnCreateDialog(int id)
         {
@@ -70,9 +81,12 @@ namespace FutsalManager.Droid
         private void UpdateUI()
         {
             _nameEditText.Text = _player.Name;
-            _positionEditText.Text = _player.Position;
+            //_positionEditText.Text = _player.Position;
             _ageEditText.Text = _player.Age.ToString();
             _birthDateTextView.Text = _player.BirthDate.ToString("dd/MM/yyyy");
+
+            var position = _positionAdapter.GetPosition(_player.Position);
+            _positionSpinner.SetSelection(position);
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -134,8 +148,9 @@ namespace FutsalManager.Droid
                 _player.Id = Guid.NewGuid().ToString();
 
             _player.Name = _nameEditText.Text;
-            _player.Position = _positionEditText.Text;
+            //_player.Position = _positionEditText.Text;
             _player.BirthDate = DateTime.ParseExact(_birthDateTextView.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            _player.Position = _positionSpinner.SelectedItem.ToString();
 
             AppData.Service.AddEditPlayer(_player);
             var toast = Toast.MakeText(this, String.Format("{0} saved.", _player.Name), ToastLength.Short);

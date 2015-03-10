@@ -12,6 +12,7 @@ namespace FutsalManager.Droid
     [Activity(Label = "Super Bobai Cup", ScreenOrientation = ScreenOrientation.Landscape, MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
+        Button _newTournamentButton;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -20,7 +21,9 @@ namespace FutsalManager.Droid
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
 
-            
+            _newTournamentButton = FindViewById<Button>(Resource.Id.newTournamentButton);
+            _newTournamentButton.Click += delegate { StartActivity(typeof(TournamentSetupActivity)); };
+
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)

@@ -25,10 +25,11 @@
             p1:layout_width="match_parent"
             p1:layout_height="wrap_content"
             p1:id="@+id/textView2" />
-        <EditText
+        <Spinner
             p1:layout_width="match_parent"
             p1:layout_height="wrap_content"
-            p1:id="@+id/positionEditText" />
+            p1:id="@+id/positionSpinner"
+            p1:prompt="@string/position_prompt" />
         <TextView
             p1:text="Birth Date"
             p1:layout_width="match_parent"

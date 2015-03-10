@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="Hello">Hello World, Click Me!</string>
-    <string name="ApplicationName">FutsalManager.Droid</string>
+  <string name="Hello">Hello World, Click Me!</string>
+  <string name="ApplicationName">FutsalManager.Droid</string>
+  <string name="position_prompt">Choose a position</string>
+  <string-array name="position_array">
+    <item>Goalkeeper</item>
+    <item>Outfield</item>
+    <item>All</item>
+  </string-array>
 </resources>

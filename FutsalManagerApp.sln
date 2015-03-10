@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FutsalManager.Droid", "Futs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FutsalManager.Persistence", "FutsalManager.Persistence\FutsalManager.Persistence.csproj", "{7A75DDD8-DC94-4F68-A748-DC75FB8BDBB6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FutsalManager.Test", "FutsalManager.Test\FutsalManager.Test.csproj", "{4BD98138-03EA-4E19-8598-4F5E5E0AE88C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,12 @@ Global
 		{7A75DDD8-DC94-4F68-A748-DC75FB8BDBB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A75DDD8-DC94-4F68-A748-DC75FB8BDBB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A75DDD8-DC94-4F68-A748-DC75FB8BDBB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BD98138-03EA-4E19-8598-4F5E5E0AE88C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BD98138-03EA-4E19-8598-4F5E5E0AE88C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BD98138-03EA-4E19-8598-4F5E5E0AE88C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{4BD98138-03EA-4E19-8598-4F5E5E0AE88C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BD98138-03EA-4E19-8598-4F5E5E0AE88C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BD98138-03EA-4E19-8598-4F5E5E0AE88C}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

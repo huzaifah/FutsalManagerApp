@@ -53,13 +53,23 @@ namespace FutsalManager.Domain
             return _players.Single(x => x.ListItemId == itemId);
         }
 
-        public string CreateTournament(Tournament tournament)
+        public void UpdatePlayerByTournament(PlayerDto player)
         {
-            var tournamentId = tournamentRepo.Add(tournament.ConvertToDto());
+            tournamentRepo.UpdatePlayerByTournament(player);
+        }
+
+        public string AddEditTournament(Tournament tournament)
+        {
+            var tournamentId = tournamentRepo.AddEdit(tournament.ConvertToDto());
             return tournamentId;
         }
 
-        public void AddTeam(Tournament tournament, Team team)
+        public string CreateTeam(Team team)
+        {
+            return tournamentRepo.AddEditTeam(team.ConvertToDto());
+        }
+
+        public void AssignTeam(Tournament tournament, Team team)
         {
             var teamCount = tournamentRepo.GetTotalTeamsByTournament(tournament.Id);
 
@@ -119,6 +129,12 @@ namespace FutsalManager.Domain
         public Tournament RetrieveTournamentByDate(DateTime tournamentDate)
         {
             var tournament = tournamentRepo.GetByDate(tournamentDate);
+            return tournament.ConvertToEntity();
+        }
+
+        public Tournament RetrieveTournamentById(string tournamentId)
+        {
+            var tournament = tournamentRepo.GetById(tournamentId);
             return tournament.ConvertToEntity();
         }
 

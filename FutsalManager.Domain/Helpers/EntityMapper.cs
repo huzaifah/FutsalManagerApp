@@ -17,7 +17,8 @@ namespace FutsalManager.Domain.Helpers
                 Id = tournament.Id,
                 Date = tournament.Date,
                 TotalTeam = tournament.TotalTeam,
-                MaxPlayerPerTeam = tournament.MaxPlayerPerTeam
+                MaxPlayerPerTeam = tournament.MaxPlayerPerTeam,
+                Completed = tournament.Completed
             };
         }
 
@@ -28,7 +29,8 @@ namespace FutsalManager.Domain.Helpers
                 Id = tournament.Id,
                 Date = tournament.Date,
                 TotalTeam = tournament.TotalTeam,
-                MaxPlayerPerTeam = tournament.MaxPlayerPerTeam
+                MaxPlayerPerTeam = tournament.MaxPlayerPerTeam,
+                Completed = tournament.Completed
             };
         }
 
@@ -41,7 +43,10 @@ namespace FutsalManager.Domain.Helpers
                 BirthDate = player.BirthDate,
                 Position = player.Position,
                 TeamId = player.TeamId,
-                TournamentId = player.TournamentId
+                TournamentId = player.TournamentId,
+                Attendance = player.Attendance,
+                Paid = player.Paid,
+                TotalGoals = player.TotalGoals                
             };
         }
 
@@ -54,7 +59,10 @@ namespace FutsalManager.Domain.Helpers
                 BirthDate = player.BirthDate,
                 Position = player.Position,
                 TeamId = player.TeamId,
-                TournamentId = player.TournamentId
+                TournamentId = player.TournamentId,
+                Attendance = player.Attendance,
+                Paid = player.Paid,
+                TotalGoals = player.TotalGoals
             };
         }
 
@@ -86,7 +94,8 @@ namespace FutsalManager.Domain.Helpers
                 HomeTeam = match.HomeTeam.ConvertToDto(),
                 AwayTeam = match.AwayTeam.ConvertToDto(),
                 IsCompleted = match.IsCompleted,
-                TournamentId = match.TournamentId
+                TournamentId = match.TournamentId,
+                Type = match.Type
             };
         }
 
@@ -98,7 +107,8 @@ namespace FutsalManager.Domain.Helpers
                 HomeTeam = match.HomeTeam.ConvertToEntity(),
                 AwayTeam = match.AwayTeam.ConvertToEntity(),
                 IsCompleted = match.IsCompleted,
-                TournamentId = match.TournamentId
+                TournamentId = match.TournamentId,
+                Type = match.Type
             };
         }
     }

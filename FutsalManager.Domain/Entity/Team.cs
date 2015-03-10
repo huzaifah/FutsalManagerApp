@@ -21,8 +21,8 @@ namespace FutsalManager.Domain.Entity
         public Team(string name)
         {
             Name = name;
-
             //Players = new List<Player>();
         }
+
     }
 }

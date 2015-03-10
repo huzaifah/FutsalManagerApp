@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C1D4DD73-9945-4BE3-9A77-7B4B539BBB6F}</ProjectGuid>
+    <ProjectGuid>{4BD98138-03EA-4E19-8598-4F5E5E0AE88C}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FutsalManager.Droid</RootNamespace>
-    <AssemblyName>FutsalManager.Droid</AssemblyName>
+    <RootNamespace>FutsalManager.Test</RootNamespace>
+    <AssemblyName>FutsalManager.Test</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AndroidApplication>true</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
@@ -45,58 +45,29 @@
   <ItemGroup>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
-    <Reference Include="SQLite, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\FutsalManager.Persistence\SQLiteNetLibrary\SQLite.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
+    <Reference Include="Xamarin.Android.NUnitLite" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adapters\AppData.cs" />
-    <Compile Include="Adapters\PlayerListViewAdapter.cs" />
     <Compile Include="MainActivity.cs" />
-    <Compile Include="PlayerDetailActivity.cs" />
-    <Compile Include="PlayerListActivity.cs" />
+    <Compile Include="TournamentServiceTest.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TournamentSetupActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
-    <AndroidResource Include="Resources\layout\PlayerTourList.axml">
-      <SubType>AndroidResource</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\PlayerListItem.axml">
-      <SubType>AndroidResource</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\PlayerDetail.axml">
-      <SubType>AndroidResource</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\TournamentSetup.axml">
-      <SubType>AndroidResource</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\Main.axml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\values\Strings.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\Icon.png" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidResource Include="Resources\values\Strings.xml" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Properties\AndroidManifest.xml" />
-    <AndroidResource Include="Resources\menu\MainMenu.xml" />
-    <AndroidResource Include="Resources\drawable\ic_new.png" />
-    <AndroidResource Include="Resources\menu\PlayerListViewMenu.xml" />
-    <AndroidResource Include="Resources\drawable\ic_refresh.png" />
-    <AndroidResource Include="Resources\menu\PlayerDetailMenu.xml" />
-    <AndroidResource Include="Resources\drawable\ic_save.png" />
-    <AndroidResource Include="Resources\drawable\ic_delete.png" />
-    <AndroidResource Include="Resources\menu\TournamentSetupMenu.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FutsalManager.Domain\FutsalManager.Domain.csproj">
@@ -108,7 +79,6 @@
       <Name>FutsalManager.Persistence</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
      Other similar extension points exist, see Microsoft.Common.targets.

@@ -46,7 +46,12 @@ namespace FutsalManager.Droid.Adapters
 
             var player = AppData.Service.Players[position];
 
-            view.FindViewById<TextView>(Resource.Id.nameTextView).Text = player.Name;
+            string age = "??";
+
+            if (player.Age != 0)
+                age = player.Age.ToString();
+
+            view.FindViewById<TextView>(Resource.Id.nameTextView).Text = player.Name + " (" + age + ")";
             view.FindViewById<TextView>(Resource.Id.positionTextView).Text = player.Position;
             view.FindViewById<TextView>(Resource.Id.goalTextView).Text = "Goals: 0";
 

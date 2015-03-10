@@ -15,5 +15,6 @@ namespace FutsalManager.Persistence.Entities
         public Guid HomeTeam { get; set; }
         public Guid AwayTeam { get; set; }
         public bool IsCompleted { get; set; }
+        public string Type { get; set; }
     }
 }
