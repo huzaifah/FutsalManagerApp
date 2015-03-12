@@ -26,6 +26,8 @@ namespace FutsalManager.Droid
 
         }
 
+        
+
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.MainMenu, menu);

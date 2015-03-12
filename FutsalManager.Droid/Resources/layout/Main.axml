@@ -3,22 +3,36 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    <TextView
-        android:text="Super Bobai Cup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView1"
-        android:layout_gravity="center_horizontal"
-        android:textSize="35sp" />
     <Button
-        android:text="New Tournament"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/newTournamentButton"
-        android:padding="5dp" />
+        android:text="Admin Menu"
+        android:layout_width="214.2dp"
+        android:layout_height="56.3dp"
+        android:id="@+id/button1"
+        android:layout_gravity="right"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="80dp" />
     <ImageView
         android:src="@android:drawable/ic_menu_gallery"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="208.7dp"
         android:id="@+id/imageView1" />
+    <TextView
+        android:text="Super Bobai Cup"
+        android:layout_width="match_parent"
+        android:layout_height="112.3dp"
+        android:id="@+id/textView1"
+        android:layout_gravity="center_horizontal"
+        android:textSize="55sp"
+        android:gravity="center"
+        android:layout_marginBottom="125.9dp" />
+    <Button
+        android:text="New Tournament"
+        android:layout_width="316.4dp"
+        android:layout_height="76.2dp"
+        android:id="@+id/newTournamentButton"
+        android:padding="5dp"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:textSize="30sp" />
 </LinearLayout>
