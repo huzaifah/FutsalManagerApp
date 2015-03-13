@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-
+<LinearLayout xmlns:p1="http://schemas.android.com/apk/res/android"
+    p1:orientation="horizontal"
+    p1:layout_width="match_parent"
+    p1:layout_height="match_parent"
+    p1:id="@+id/linearLayout1">
+    <Button
+        p1:text="Players"
+        p1:layout_width="179.2dp"
+        p1:layout_height="95.6dp"
+        p1:id="@+id/button1"
+        p1:layout_marginTop="300dp"
+        p1:layout_marginLeft="340dp" />
+    <Button
+        p1:text="Tournament"
+        p1:layout_width="177.0dp"
+        p1:layout_height="89.1dp"
+        p1:id="@+id/button2"
+        p1:layout_marginTop="300dp"
+        p1:layout_marginLeft="220dp" />
 </LinearLayout>
