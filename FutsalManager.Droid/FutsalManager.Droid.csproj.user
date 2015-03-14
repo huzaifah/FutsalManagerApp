@@ -3,5 +3,6 @@
   <PropertyGroup>
     <AndroidDesignerPreferredDevice>10.1" WXGA %28Tablet%29</AndroidDesignerPreferredDevice>
     <SelectedDevice>LENOVO A680_ROW</SelectedDevice>
+    <AndroidDesignerPreferredTheme>Theme.Black.NoTitleBar</AndroidDesignerPreferredTheme>
   </PropertyGroup>
 </Project>
