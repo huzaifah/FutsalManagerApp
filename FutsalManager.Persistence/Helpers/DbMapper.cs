@@ -89,6 +89,33 @@ namespace FutsalManager.Persistence.Helpers
             };
         }
 
+        public static ScoreDto ConvertToDto(this Scores score)
+        {
+            if (score == null)
+                return default(ScoreDto);
+
+            return new ScoreDto
+            {
+                TournamentId = score.TournamentId.ToString(),
+                MatchId = score.MatchId.ToString(),
+                TeamId = score.TeamId.ToString(),
+                ScorerId = score.PlayerId.ToString(),
+                Remark = score.Remark                
+            };
+        }
+
+        public static Scores ConvertToDb(this ScoreDto score)
+        {
+            return new Scores
+            {
+                TournamentId = Guid.Parse(score.TournamentId),
+                MatchId = Guid.Parse(score.MatchId),
+                TeamId = Guid.Parse(score.TeamId),
+                PlayerId = Guid.Parse(score.ScorerId),
+                Remark = score.Remark
+            };
+        }
+
         public static MatchDto ConvertToDto(this Matchs match)
         {
             return new MatchDto

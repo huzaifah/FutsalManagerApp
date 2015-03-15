@@ -47,12 +47,14 @@
   <ItemGroup>
     <Compile Include="Dtos\MatchDto.cs" />
     <Compile Include="Dtos\PlayerDto.cs" />
+    <Compile Include="Dtos\ScoreDto.cs" />
     <Compile Include="Dtos\TeamDto.cs" />
     <Compile Include="Dtos\TournamentDto.cs" />
     <Compile Include="Entity\Match.cs" />
     <Compile Include="Entity\Player.cs" />
     <Compile Include="Entity\Score.cs" />
     <Compile Include="Entity\Team.cs" />
+    <Compile Include="Entity\TeamStanding.cs" />
     <Compile Include="Entity\Tournament.cs" />
     <Compile Include="Enum\TeamSide.cs" />
     <Compile Include="Exceptions\ExceedTotalTeamsException.cs" />

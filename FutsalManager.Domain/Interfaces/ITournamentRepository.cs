@@ -33,5 +33,7 @@ namespace FutsalManager.Domain.Interfaces
         IEnumerable<PlayerDto> GetPlayersByTeam(string tournamentId, string teamId);
         int GetTotalPlayerByTeam(string tournamentId, string teamId);
         IEnumerable<MatchDto> GetMatches(string tournamentId);
+        int GetTotalScoresByMatchTeam(string tournamentId, string matchId, string teamId);
+        IEnumerable<ScoreDto> GetScoresByMatch(string tournamentId, string matchId);
     }
 }
