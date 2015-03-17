@@ -13,6 +13,7 @@ namespace FutsalManager.Droid
     public class MainActivity : Activity
     {
         Button _newTournamentButton;
+        Button _adminButton;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -23,6 +24,9 @@ namespace FutsalManager.Droid
 
             _newTournamentButton = FindViewById<Button>(Resource.Id.newTournamentButton);
             _newTournamentButton.Click += delegate { StartActivity(typeof(TournamentSetupActivity)); };
+
+            _adminButton = FindViewById<Button>(Resource.Id.adminButton);
+            _adminButton.Click += delegate { StartActivity(typeof(AdminActivity)); };
 
         }
 

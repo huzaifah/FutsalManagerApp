@@ -20,6 +20,11 @@ namespace FutsalManager.Persistence
 
         public TournamentRepository(string databasePath)
         {
+            string folderPath = Path.GetDirectoryName(databasePath);
+
+            if (!Directory.Exists(folderPath))
+                Directory.CreateDirectory(folderPath);
+            
             db = new SQLiteConnection(databasePath);
 
             if (!db.GetTableInfo("Players").Any()) 
