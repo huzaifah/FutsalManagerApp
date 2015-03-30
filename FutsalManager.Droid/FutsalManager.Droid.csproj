@@ -107,7 +107,7 @@
     <AndroidResource Include="Resources\drawable\ic_save.png" />
     <AndroidResource Include="Resources\drawable\ic_delete.png" />
     <AndroidResource Include="Resources\menu\TournamentSetupMenu.xml" />
-    <AndroidResource Include="Resources\drawable\bobai_logo.png" />
+    <AndroidResource Include="Resources\drawable\bobailogo.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FutsalManager.Domain\FutsalManager.Domain.csproj">
