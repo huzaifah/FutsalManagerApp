@@ -20,6 +20,11 @@ namespace FutsalManager.Persistence
 
         public TournamentRepository(string databasePath)
         {
+            string folderPath = Path.GetDirectoryName(databasePath);
+
+            if (!Directory.Exists(folderPath))
+                Directory.CreateDirectory(folderPath);
+            
             db = new SQLiteConnection(databasePath);
 
             if (!db.GetTableInfo("Players").Any()) 
@@ -299,6 +304,26 @@ namespace FutsalManager.Persistence
             };
 
             db.Insert(score, typeof(Scores));
+        }
+
+        public int GetTotalScoresByMatchTeam(string tournamentId, string matchId, string teamId)
+        {
+            Guid tournamentGuid = Guid.Parse(tournamentId);
+            Guid matchGuid = Guid.Parse(matchId);
+            Guid teamGuid = Guid.Parse(teamId);
+
+            var scores = db.Table<Scores>().Count(m => m.TournamentId == tournamentGuid && m.MatchId == matchGuid && m.TeamId == teamGuid);
+
+            return scores;
+        }
+
+        public IEnumerable<ScoreDto> GetScoresByMatch(string tournamentId, string matchId)
+        {
+            Guid tournamentGuid = Guid.Parse(tournamentId);
+            Guid matchGuid = Guid.Parse(matchId);
+
+            var scoreList = db.Table<Scores>().Where(m => m.TournamentId == tournamentGuid && m.MatchId == matchGuid);
+            return scoreList.ToList().ConvertAll(s => s.ConvertToDto());
         }
 
         /*

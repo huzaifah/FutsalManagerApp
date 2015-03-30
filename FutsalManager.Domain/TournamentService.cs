@@ -191,5 +191,152 @@ namespace FutsalManager.Domain
 
             return playerId;
         }
+
+        public void GenerateMatches(Tournament tournament)
+        {
+            // find all assigned teams
+            var teams = RetrieveTeams(tournament);
+
+            foreach (var hometeam in teams)
+            {
+                foreach (var awayteam in teams)
+                {
+                    AddMatch(tournament, hometeam, awayteam);
+                }
+            }
+        }
+
+        public IEnumerable<TeamStanding> GenerateStanding(Tournament tournament)
+        {
+            var teamStandings = new List<TeamStanding>();
+
+            // find all matches
+            var matches = RetrieveMatches(tournament);
+
+            // find all teams
+            var teams = RetrieveTeams(tournament);
+
+            // iterate each team
+            foreach (var team in teams)
+            {
+                var teamStanding = new TeamStanding();
+                teamStanding.Team = team;
+
+                // find home match
+                var totalHome = matches.Count(m => m.HomeTeam.Name == team.Name);
+
+                // find away match
+                var totalAway = matches.Count(m => m.AwayTeam.Name == team.Name);
+
+                // calculate total matches
+                teamStanding.TotalMatches = totalHome + totalAway;
+
+                var teamMatches = matches.Where(m => m.HomeTeam.Name == team.Name || m.AwayTeam.Name == team.Name);
+                int totalWins = 0;
+                int totalDraws = 0;
+                int totalLoses = 0;
+
+                foreach (var match in teamMatches)
+                {
+                    // retrieve scores
+                    var scores = GetAllScoresByMatch(tournament, match);
+
+                    var goals = scores.Count(s => s.TeamId == team.Id);
+                    var concedes = scores.Count(s => s.TeamId != team.Id);
+                    teamStanding.TotalScores += goals;
+                    teamStanding.TotalConceded += concedes;
+
+                    if (goals > concedes)
+                        totalWins++;
+                    else if (goals == concedes)
+                        totalDraws++;
+                    else
+                        totalLoses++;
+                }
+
+                teamStanding.GoalDifference = teamStanding.TotalScores - teamStanding.TotalConceded;
+                teamStanding.TotalWins = totalWins;
+                teamStanding.TotalLoses = totalLoses;
+                teamStanding.TotalDraws = totalDraws;
+
+                // calculate points
+                teamStanding.TotalPoints = (totalWins * 3) + (totalDraws);
+
+                teamStandings.Add(teamStanding);
+            }
+
+            return teamStandings;
+        }
+
+        public int GetTotalScoresByTeam(Tournament tournament, Match match, Team team)
+        {
+            var scores = tournamentRepo.GetTotalScoresByMatchTeam(tournament.Id, match.Id, team.Id);
+            return scores;
+        }
+
+        public IEnumerable<ScoreDto> GetAllScoresByMatch(Tournament tournament, Match match)
+        {
+            var scores = tournamentRepo.GetScoresByMatch(tournament.Id, match.Id);
+            return scores;
+        }
+
+        public void GenerateDeciderMatch(Tournament tournament, List<TeamStanding> teamStandings)
+        {
+            // validate total matches are equal
+            var teams = teamStandings.Count;
+            var minMatch = (teams - 1) * 2;
+
+            foreach (var standing in teamStandings)
+            {
+                if (standing.TotalMatches < minMatch)
+                    throw new ApplicationException("Incomplete total matches for team " + standing.Team.Name);
+            }
+
+            // sort teamStandings by total points
+            teamStandings.OrderByDescending(s => s.TotalPoints);
+
+            // add final match
+            if (teamStandings[0] != null && teamStandings[1] != null)
+            {
+                var finalMatch = new Match
+                {
+                    HomeTeam = teamStandings[0].Team,
+                    AwayTeam = teamStandings[1].Team,
+                    Type = "Final"
+                };
+
+                AddMatch(tournament, finalMatch);
+            }
+
+            // add third placing
+            if (teamStandings[2] != null && teamStandings[3] != null)
+            {
+                var thirdPlacing = new Match
+                {
+                    HomeTeam = teamStandings[2].Team,
+                    AwayTeam = teamStandings[3].Team,
+                    Type = "3rdPlacing"
+                };
+
+                AddMatch(tournament, thirdPlacing);
+            }
+        }
+
+        public IEnumerable<MatchDto> RetrieveDeciderMatch(Tournament tournament)
+        {
+            var matches = RetrieveMatches(tournament);
+
+            var final = matches.SingleOrDefault(m => m.Type == "Final");
+            var thirdPlacing = matches.SingleOrDefault(m => m.Type == "3rdPlacing");
+
+            if (final == null || thirdPlacing == null)
+                throw new ApplicationException("One or all decider matches are not found");
+
+            var deciderMatches = new List<MatchDto>();
+            deciderMatches.Add(final.ConvertToDto());
+            deciderMatches.Add(thirdPlacing.ConvertToDto());
+
+            return deciderMatches;
+        }
     }
 }

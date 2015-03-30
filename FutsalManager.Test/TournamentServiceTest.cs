@@ -20,9 +20,17 @@ namespace FutsalManager.Test
         [SetUp]
         public void Setup() 
         {
-            string storagePath =
-                Path.Combine(Android.OS.Environment.ExternalStorageDirectory.Path,
-                "Bobai", "futsal.db");
+            string folderPath = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.Path,
+                "Bobai");
+
+            //string storagePath =
+            //    Path.Combine(Android.OS.Environment.ExternalStorageDirectory.Path,
+            //    "Bobai", "futsal.db");
+
+            if (!Directory.Exists(folderPath))
+                Directory.CreateDirectory(folderPath);
+
+            string storagePath = Path.Combine(folderPath, "futsal.db");
 
             tournamentRepo = new TournamentRepository(storagePath);
             tournamentService = new TournamentService(tournamentRepo);
