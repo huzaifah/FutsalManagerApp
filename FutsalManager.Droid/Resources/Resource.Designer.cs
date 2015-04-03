@@ -106,8 +106,8 @@ namespace FutsalManager.Droid
 			// aapt resource value: 0x7f07001b
 			public const int actionSaveTournament = 2131165211;
 			
-			// aapt resource value: 0x7f070003
-			public const int adminButton = 2131165187;
+			// aapt resource value: 0x7f070004
+			public const int adminButton = 2131165188;
 			
 			// aapt resource value: 0x7f07000f
 			public const int ageEditText = 2131165199;
@@ -115,14 +115,14 @@ namespace FutsalManager.Droid
 			// aapt resource value: 0x7f07000c
 			public const int birthDateTextView = 2131165196;
 			
+			// aapt resource value: 0x7f070003
+			public const int button3 = 2131165187;
+			
 			// aapt resource value: 0x7f070015
 			public const int dateTextView = 2131165205;
 			
 			// aapt resource value: 0x7f070013
 			public const int goalTextView = 2131165203;
-			
-			// aapt resource value: 0x7f070004
-			public const int imageView1 = 2131165188;
 			
 			// aapt resource value: 0x7f070000
 			public const int linearLayout1 = 2131165184;

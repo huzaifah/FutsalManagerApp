@@ -75,8 +75,11 @@ namespace FutsalManager.Domain
 
             if (teamCount >= tournament.TotalTeam)
                 throw new ExceedTotalTeamsException();
-                        
-            tournamentRepo.AssignTeam(tournament.Id, team.ConvertToDto());            
+
+            var teams = tournamentRepo.GetAllTeams();
+            var teamToAssign = teams.Single(t => t.Name.Equals(team.Name, StringComparison.OrdinalIgnoreCase));
+
+            tournamentRepo.AssignTeam(tournament.Id, teamToAssign);            
         }
 
         public void AssignPlayer(Tournament tournament, Team team, Player player)
@@ -85,6 +88,9 @@ namespace FutsalManager.Domain
 
             if (teamList.SingleOrDefault(t => t.Name == team.Name) == null)
                 throw new TeamNotFoundException();
+
+            player.TeamId = team.Id;
+            player.TournamentId = tournament.Id;
 
             tournamentRepo.AssignPlayer(player.ConvertToDto());
         }
@@ -177,6 +183,11 @@ namespace FutsalManager.Domain
             return tournamentRepo.GetPlayerById(playerId);
         }
 
+        public PlayerDto GetPlayerByTournament(string playerId, string tournamentId)
+        {
+            return tournamentRepo.GetPlayerStatusByTournament(playerId, tournamentId);
+        }
+
         public string AddEditPlayer(PlayerDto player)
         {
             var playerId = tournamentRepo.AddEditPlayer(player);
@@ -199,7 +210,9 @@ namespace FutsalManager.Domain
 
             foreach (var hometeam in teams)
             {
-                foreach (var awayteam in teams)
+                var teamsToPlay = teams.Where(t => t.Name != hometeam.Name);
+
+                foreach (var awayteam in teamsToPlay)
                 {
                     AddMatch(tournament, hometeam, awayteam);
                 }
@@ -210,8 +223,8 @@ namespace FutsalManager.Domain
         {
             var teamStandings = new List<TeamStanding>();
 
-            // find all matches
-            var matches = RetrieveMatches(tournament);
+            // find all completed matches
+            var matches = RetrieveMatches(tournament).Where(m => m.IsCompleted == true);
 
             // find all teams
             var teams = RetrieveTeams(tournament);
@@ -265,6 +278,9 @@ namespace FutsalManager.Domain
                 teamStandings.Add(teamStanding);
             }
 
+            // sort teamStandings by total points and goal difference
+            teamStandings.OrderByDescending(s => s.TotalPoints).ThenByDescending(s => s.GoalDifference);
+
             return teamStandings;
         }
 
@@ -292,16 +308,20 @@ namespace FutsalManager.Domain
                     throw new ApplicationException("Incomplete total matches for team " + standing.Team.Name);
             }
 
-            // sort teamStandings by total points
-            teamStandings.OrderByDescending(s => s.TotalPoints);
+            // sort teamStandings by total points and goal difference
+            teamStandings.OrderByDescending(s => s.TotalPoints).ThenByDescending(s => s.GoalDifference);
+
+            // assign rank to each team
+            int i = 0;
+            teamStandings.ForEach(t => t.Ranking = i++);
 
             // add final match
             if (teamStandings[0] != null && teamStandings[1] != null)
             {
                 var finalMatch = new Match
                 {
-                    HomeTeam = teamStandings[0].Team,
-                    AwayTeam = teamStandings[1].Team,
+                    HomeTeam = teamStandings.Single(t => t.Ranking == 1).Team,
+                    AwayTeam = teamStandings.Single(t => t.Ranking == 2).Team,
                     Type = "Final"
                 };
 
@@ -313,8 +333,8 @@ namespace FutsalManager.Domain
             {
                 var thirdPlacing = new Match
                 {
-                    HomeTeam = teamStandings[2].Team,
-                    AwayTeam = teamStandings[3].Team,
+                    HomeTeam = teamStandings.Single(t => t.Ranking == 3).Team,
+                    AwayTeam = teamStandings.Single(t => t.Ranking == 4).Team,
                     Type = "3rdPlacing"
                 };
 
@@ -338,5 +358,18 @@ namespace FutsalManager.Domain
 
             return deciderMatches;
         }
+
+        public void CompleteMatch(Match match)
+        {
+            match.IsCompleted = true;
+            tournamentRepo.UpdateMatch(match.ConvertToDto());
+        }
+
+        public void EndTournament(Tournament tournament)
+        {
+            tournament.Completed = true;
+            AddEditTournament(tournament);
+        }
+
     }
 }

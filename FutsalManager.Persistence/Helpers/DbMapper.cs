@@ -116,7 +116,7 @@ namespace FutsalManager.Persistence.Helpers
             };
         }
 
-        public static MatchDto ConvertToDto(this Matchs match)
+        public static MatchDto ConvertToDto(this Matches match)
         {
             return new MatchDto
             {
@@ -129,7 +129,7 @@ namespace FutsalManager.Persistence.Helpers
             };
         }
 
-        public static Matchs ConvertToDb(this MatchDto match)
+        public static Matches ConvertToDb(this MatchDto match)
         {
             Guid matchGuid = Guid.Empty, tournamentGuid = Guid.Empty, homeTeamGuid, awayTeamGuid;
 
@@ -144,7 +144,7 @@ namespace FutsalManager.Persistence.Helpers
             if (!Guid.TryParse(match.HomeTeam.Id, out homeTeamGuid) || !Guid.TryParse(match.AwayTeam.Id, out awayTeamGuid))
                 throw new ArgumentException("Team id is invalid");
             
-            return new Matchs
+            return new Matches
             {
                 Id = matchGuid,
                 IsCompleted = match.IsCompleted,

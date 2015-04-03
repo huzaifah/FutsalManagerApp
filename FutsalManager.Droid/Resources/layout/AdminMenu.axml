@@ -6,12 +6,26 @@
     p1:id="@+id/linearLayout1">
     <Button
         p1:text="Players"
-        p1:layout_width="160.5dp"
-        p1:layout_height="58.3dp"
-        p1:id="@+id/playerButton" />
+        p1:layout_width="177.0dp"
+        p1:layout_height="95.6dp"
+        p1:id="@+id/playerButton"
+        p1:layout_marginTop="300dp"
+        p1:layout_marginLeft="340dp"
+        p1:textSize="25sp" />
     <Button
-        p1:text="Tournaments"
-        p1:layout_width="160.5dp"
-        p1:layout_height="58.3dp"
-        p1:id="@+id/tournamentButton" />
+        p1:text="Tournament"
+        p1:layout_width="177.0dp"
+        p1:layout_height="89.1dp"
+        p1:id="@+id/tournamentButton"
+        p1:layout_marginTop="300dp"
+        p1:layout_marginLeft="220dp"
+        p1:textSize="25sp" />
+    <Button
+        p1:text="Back to Main Menu"
+        p1:layout_width="200dp"
+        p1:layout_height="70dp"
+        p1:id="@+id/button3"
+        p1:layout_marginLeft="140dp"
+        p1:layout_marginTop="630dp"
+        p1:textSize="20sp" />
 </LinearLayout>

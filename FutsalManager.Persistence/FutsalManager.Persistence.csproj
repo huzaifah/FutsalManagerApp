@@ -49,7 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Matchs.cs" />
+    <Compile Include="Entities\Matches.cs" />
     <Compile Include="Entities\PlayerAssignments.cs" />
     <Compile Include="Entities\Players.cs" />
     <Compile Include="Entities\Scores.cs" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,10 @@ namespace FutsalManager.Persistence.Entities
 {
     public class PlayerAssignments
     {
+        [PrimaryKey]
+        [AutoIncrement]
+        public int Id { get; set; }
+
         public Guid PlayerId { get; set; }
         public Guid TeamId { get; set; }
         public Guid TournamentId { get; set; }
