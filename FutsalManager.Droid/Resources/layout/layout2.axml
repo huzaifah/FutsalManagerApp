@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    style="@style/pagetemplate">
+    <TableLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/idBasketTable"
+        style="@style/pagetemplate">
+        <TableRow>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:text="Options"
+                android:visibility="invisible" />
+            <TextView
+                android:text="Product Name"
+                style="@style/textViewHeader"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_weight="30"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="Qty"
+                style="@style/textViewHeader"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_weight="30"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="Price"
+                style="@style/textViewHeader"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_weight="30"
+                android:layout_height="wrap_content" />
+        </TableRow>
+    </TableLayout>
+    <include
+        layout="@layout/Menu"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>
