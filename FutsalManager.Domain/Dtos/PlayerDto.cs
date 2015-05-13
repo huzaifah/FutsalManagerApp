@@ -34,6 +34,7 @@ namespace FutsalManager.Domain.Dtos
         public string Attendance { get; set; }
         public bool Paid { get; set; }
         public long TotalGoals { get; set; }
+        public bool IsDeleted { get; set; }
 
         public int Age
         {

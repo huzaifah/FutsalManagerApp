@@ -18,7 +18,7 @@ namespace FutsalManager.Persistence.Helpers
                 Date = tournament.Date,
                 TotalTeam = tournament.TotalTeam,
                 MaxPlayerPerTeam = tournament.MaxPlayerPerTeam,
-                Completed = tournament.Completed
+                Status = tournament.Status
             };
         }
 
@@ -30,7 +30,7 @@ namespace FutsalManager.Persistence.Helpers
                 Date = tournament.Date,
                 TotalTeam = tournament.TotalTeam,
                 MaxPlayerPerTeam = tournament.MaxPlayerPerTeam,
-                Completed = tournament.Completed
+                Status = tournament.Status
             };
         }
 

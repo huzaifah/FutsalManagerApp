@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FutsalManager.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace FutsalManager.Domain.Entity
         public DateTime Date { get; set; }
         public int TotalTeam { get; set; }
         public int MaxPlayerPerTeam { get; set; }
-        public bool Completed { get; set; }
+        public TournamentStatus Status { get; set; }
         
         /*        
         private List<Team> Teams { get; set; }

@@ -206,7 +206,7 @@ namespace FutsalManager.Test
             var players = tournamentService.RetrievePlayers(tournament, team);
             var player = players.Single(p => p.Name == "Nathan");
 
-            tournamentService.AddScore(tournament, match, Domain.Enum.TeamSide.Home, player.Id, "");
+            tournamentService.AddScore(tournament, match, Domain.Enums.TeamSide.Home, player.Id, "");
 
             var scores = tournamentService.GetTotalScoresByTeam(tournament, match, team);
 
@@ -259,13 +259,43 @@ namespace FutsalManager.Test
         }
 
         [Test]
+        [Ignore("another time")]
         public void EndTournament_SingleTournament_RetrieveTournament()
         {
             var tournament = tournamentService.RetrieveTournamentById(_tournamentId);
             tournamentService.EndTournament(tournament);
 
             tournament = tournamentService.RetrieveTournamentById(_tournamentId);
-            Assert.IsTrue(tournament.Completed);
+            Assert.IsTrue(tournament.Status == Domain.Enums.TournamentStatus.Completed);
+        }
+
+        [Test]
+        [Ignore("another time")]
+        public void DeletePlayer_SinglePlayerWithAssignment_PlayerDeleted()
+        {
+            string playerId = "";
+            tournamentService.DeletePlayer(playerId);
+        }
+
+        [Test]
+        public void RunSqlStatement()
+        {
+            //tournamentRepo.RunSqlStatement("ALTER TABLE Players ADD IsDeleted integer");
+            //tournamentRepo.RunSqlStatement("ALTER TABLE Tournaments DROP COLUMN Completed");
+            //tournamentRepo.RunSqlStatement("ALTER TABLE Tournaments ADD Status varchar");
+            //tournamentRepo.RunSqlStatement("DELETE FROM Teams WHERE Id = '51d077d3-f288-4b05-b152-988a472d2a75'");
+            //tournamentRepo.RunSqlStatement("DELETE FROM Teams WHERE Id = '57bd2345-d8b0-4b98-954c-ac63ae543d41'");
+            //tournamentRepo.RunSqlStatement("DELETE FROM Teams WHERE Id = 'affa466d-2185-4fd3-bc1c-fccf108f7a75'");
+            //tournamentRepo.RunSqlStatement("DELETE FROM Teams WHERE Id = 'd59c4fe5-ddae-4c37-ac52-eddf1e718880'");
+            tournamentRepo.RunSqlStatement("UPDATE Tournaments SET Status = 'InProgress' WHERE Id='38dc12d9-0ad0-4acf-93e2-5cac81eab245' OR Id='21095a07-9a82-4cc2-b872-3bd449b1d919'");
+        }
+
+        [Test]
+        [Ignore("another time")]
+        public void DeleteTournament_NotStartedTournament_TournamentDeleted()
+        {
+            string tournamentId = "21095a07-9a82-4cc2-b872-3bd449b1d919";
+            tournamentService.DeleteTournament(tournamentId);
         }
     }
 }

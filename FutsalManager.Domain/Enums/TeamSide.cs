@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FutsalManager.Domain.Enum
+namespace FutsalManager.Domain.Enums
 {
     public enum TeamSide
     {

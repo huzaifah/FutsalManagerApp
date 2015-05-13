@@ -12,12 +12,12 @@
         android:layout_marginTop="50dp"
         android:layout_marginBottom="50dp"
         android:layout_marginRight="80dp" />
-<!--<ImageView xmlns:tools="http://schemas.android.com/tools"
-        android:src=""
+    <ImageView xmlns:tools="http://schemas.android.com/tools"
+        android:src="@drawable/bobailogo"
         android:layout_width="match_parent"
         android:layout_height="208.4dp"
         android:id="@+id/imageView1"
-        android:scaleType="fitCenter" />-->
+        android:scaleType="fitCenter" />
     <TextView
         android:text="Super Bobai Cup"
         android:layout_width="match_parent"

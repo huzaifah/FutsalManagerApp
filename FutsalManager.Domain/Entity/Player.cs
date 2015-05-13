@@ -32,6 +32,7 @@ namespace FutsalManager.Domain.Entity
         public string Attendance { get; set; }
         public bool Paid { get; set; }
         public long TotalGoals { get; set; }
+        public bool IsDeleted { get; set; }
 
         public Player()
         {

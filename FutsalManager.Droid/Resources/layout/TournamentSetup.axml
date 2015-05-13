@@ -1,65 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+<ScrollView xmlns:p1="http://schemas.android.com/apk/res/android"
+    p1:minWidth="25px"
+    p1:minHeight="25px"
+    p1:layout_width="match_parent"
+    p1:layout_height="match_parent"
+    p1:id="@+id/tournamentScrollView">
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="82.2dp"
-        android:id="@+id/linearLayout1">
+        p1:orientation="vertical"
+        p1:padding="5dp"
+        p1:layout_width="match_parent"
+        p1:layout_height="match_parent"
+        p1:id="@+id/tournamentLinearLayout">
         <TextView
-            android:text="Select Tournament Date:"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView1" />
-        <TextView
-            android:text="Date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/dateTextView"
-            android:layout_below="@id/textView1" />
+            p1:text="Date"
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/textView1" />
+        <EditText
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/tournamentDateEditText" />
         <Button
-            android:text="Pick a Date"
-            android:layout_height="wrap_content"
-            android:id="@+id/pickDateButton"
-            android:layout_alignParentRight="true"
-            android:layout_width="150dp" />
+            p1:text="Pick a Date"
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/pickDateTournamentButton" />
         <TextView
-            android:text="Name"
-            android:layout_width="260dp"
-            android:layout_height="match_parent"
-            android:id="@+id/textView1"
-            android:textSize="35sp"
-            android:gravity="center" />
+            p1:text="Status"
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/statusTextView" />
+        <EditText
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:enabled="false"
+            p1:text="N/A"
+            p1:id="@+id/statusEditText" />
         <TextView
-            android:text="Age"
-            android:layout_width="260dp"
-            android:layout_height="match_parent"
-            android:id="@+id/textView2"
-            android:gravity="center"
-            android:textSize="35sp"
-            android:width="280dp" />
-        <TextView
-            android:text="Goals"
-            android:layout_width="260dp"
-            android:layout_height="match_parent"
-            android:id="@+id/textView3"
-            android:textSize="35sp"
-            android:gravity="center" />
-        <TextView
-            android:text="Position"
-            android:layout_width="260dp"
-            android:layout_height="match_parent"
-            android:id="@+id/textView3"
-            android:textSize="35sp"
-            android:gravity="center" />
+            p1:text="Champion"
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/championTextView" />
+        <EditText
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:enabled="false"
+            p1:text="N/A"
+            p1:id="@+id/championEditText" />
+        <Button
+            p1:text="Create Tournament"
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/createTournamentButton" />
+        <Button
+            p1:text="Start Tournament"
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/startEndTournamentButton" />
+        <Button
+            p1:text="Manage Tournament"
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/manageTournamentButton" />
+        <Button
+            p1:text="Delete Tournament"
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/deleteTournamentButton" />
     </LinearLayout>
-    <TableRow
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:layout_width="match_parent"
-        android:layout_height="668.1dp"
-        android:id="@+id/tableRow1" />
-</LinearLayout>
+</ScrollView>

@@ -1,5 +1,6 @@
 ﻿using FutsalManager.Domain.Dtos;
 using FutsalManager.Domain.Entity;
+using FutsalManager.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,19 +19,24 @@ namespace FutsalManager.Domain.Helpers
                 Date = tournament.Date,
                 TotalTeam = tournament.TotalTeam,
                 MaxPlayerPerTeam = tournament.MaxPlayerPerTeam,
-                Completed = tournament.Completed
+                Status = tournament.Status.ToString()
             };
         }
 
         public static Tournament ConvertToEntity(this TournamentDto tournament)
         {
+            TournamentStatus status = TournamentStatus.NotStarted;
+
+            if (!String.IsNullOrEmpty(tournament.Status))
+                status = (TournamentStatus)Enum.Parse(typeof(TournamentStatus), tournament.Status);
+
             return new Tournament
             {
                 Id = tournament.Id,
                 Date = tournament.Date,
                 TotalTeam = tournament.TotalTeam,
                 MaxPlayerPerTeam = tournament.MaxPlayerPerTeam,
-                Completed = tournament.Completed
+                Status = status
             };
         }
 

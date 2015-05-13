@@ -30,8 +30,8 @@ namespace FutsalManager.Droid
 
             SetContentView(Resource.Layout.TournamentSetup);
 
-            _tournamentDateTextView = FindViewById<TextView>(Resource.Id.dateTextView);
-            _pickDateButton = FindViewById<Button>(Resource.Id.pickDateButton);
+            _tournamentDateTextView = FindViewById<TextView>(Resource.Id.tournamentDateEditText);
+            _pickDateButton = FindViewById<Button>(Resource.Id.pickDateTournamentButton);
 
             _pickDateButton.Click += delegate { ShowDialog(DATE_DIALOG_ID); };
 
@@ -66,8 +66,7 @@ namespace FutsalManager.Droid
                 tournament.Date = e.Date;
                 errors = false;
             }
-                
-            
+          
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)

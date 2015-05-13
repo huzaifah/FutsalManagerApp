@@ -42,9 +42,13 @@ namespace FutsalManager.Persistence
             db.CreateTable<Scores>();
         }
         
-        public IEnumerable<PlayerDto> GetAllPlayers()
+        public IEnumerable<PlayerDto> GetAllPlayers(bool includeDeleted)
         {
             var players = db.Query<Players>("Select * from Players order by Name");
+
+            if (!includeDeleted)
+                players.RemoveAll(p => p.IsDeleted == true);
+
             var playerList = players.ConvertAll(p => p.ConvertToDto());
 
             for (int i = 0; i < playerList.Count; i++)            
@@ -421,6 +425,35 @@ namespace FutsalManager.Persistence
 
             var scoreList = db.Table<Scores>().Where(m => m.TournamentId == tournamentGuid && m.MatchId == matchGuid);
             return scoreList.ToList().ConvertAll(s => s.ConvertToDto());
+        }
+
+        public void DeletePlayer(PlayerDto player)
+        {
+            Guid playerId = Guid.Parse(player.Id);
+
+            // check if player played in any tournament
+            var isAssigned = db.Table<PlayerAssignments>().Where(p => p.PlayerId == playerId).Any();
+
+            if (isAssigned) // update the isDeleted flag
+            {
+                player.IsDeleted = true;
+                AddEditPlayer(player);
+            }
+            else // remove the player from db permanently
+            {
+                db.Delete<Players>(playerId);
+            }
+        }
+
+        public void RunSqlStatement(string sql)
+        {
+            db.Execute(sql);
+        }
+
+        public void DeleteTournament(string tournamentId)
+        {
+            Guid tournamentGuid = Guid.Parse(tournamentId);
+            db.Delete<Tournaments>(tournamentGuid);
         }
 
         /*

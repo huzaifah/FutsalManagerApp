@@ -40,7 +40,7 @@ namespace FutsalManager.Droid
             _nameEditText = FindViewById<EditText>(Resource.Id.nameEditText);
             _ageEditText = FindViewById<EditText>(Resource.Id.ageEditText);
             _birthDateTextView = FindViewById<TextView>(Resource.Id.birthDateTextView);
-            _pickDateButton = FindViewById<Button>(Resource.Id.pickDateButton);
+            _pickDateButton = FindViewById<Button>(Resource.Id.pickDatePlayerButton);
             _positionSpinner = FindViewById<Spinner>(Resource.Id.positionSpinner);
 
             _positionSpinner.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(_positionSpinner_ItemSelected);
