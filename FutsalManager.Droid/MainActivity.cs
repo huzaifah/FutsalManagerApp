@@ -26,11 +26,14 @@ namespace FutsalManager.Droid
             _newTournamentButton.Click += delegate { StartActivity(typeof(TournamentSetupActivity)); };
 
             _adminButton = FindViewById<Button>(Resource.Id.adminButton);
-            _adminButton.Click += delegate { StartActivity(typeof(AdminActivity)); };
+            _adminButton.Click += delegate {
 
-        }
+                StartActivity(typeof(MasterDataActivity));
+                //StartActivity(typeof(AdminActivity)); 
+            
+            };
 
-        
+        }  
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
@@ -42,13 +45,15 @@ namespace FutsalManager.Droid
         {
             switch (item.ItemId)
             {
-                case Resource.Id.maintainPlayer:
-                    StartActivity(typeof(PlayerListActivity));
+                case Resource.Id.masterData:
+                    StartActivity(typeof(MasterDataActivity));
                     return true;
                 default:
                     return base.OnOptionsItemSelected(item);
             }            
         }
+
+
     }
 }
 

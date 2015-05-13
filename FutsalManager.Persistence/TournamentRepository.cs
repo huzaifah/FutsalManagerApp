@@ -38,13 +38,17 @@ namespace FutsalManager.Persistence
             db.CreateTable<PlayerAssignments>();
             db.CreateTable<Teams>();
             db.CreateTable<TeamAssignments>();
-            db.CreateTable<Matchs>();
+            db.CreateTable<Matches>();
             db.CreateTable<Scores>();
         }
         
-        public IEnumerable<PlayerDto> GetAllPlayers()
+        public IEnumerable<PlayerDto> GetAllPlayers(bool includeDeleted)
         {
             var players = db.Query<Players>("Select * from Players order by Name");
+
+            if (!includeDeleted)
+                players.RemoveAll(p => p.IsDeleted == true);
+
             var playerList = players.ConvertAll(p => p.ConvertToDto());
 
             for (int i = 0; i < playerList.Count; i++)            
@@ -63,7 +67,7 @@ namespace FutsalManager.Persistence
 
         public IEnumerable<TournamentDto> GetAll()
         {
-            var tournaments = db.Query<Tournaments>("Select * from Tournament");
+            var tournaments = db.Query<Tournaments>("Select * from Tournaments");
             return tournaments.ConvertAll(t => t.ConvertToDto());            
         }
 
@@ -112,6 +116,25 @@ namespace FutsalManager.Persistence
             return player.ConvertToDto();
         }
 
+        public PlayerDto GetPlayerStatusByTournament(string playerId, string tournamentId)
+        {
+            Guid playerGuid, tournamentGuid = Guid.Empty;
+
+            if (!Guid.TryParse(playerId, out playerGuid) || !Guid.TryParse(tournamentId, out tournamentGuid))
+                throw new ArgumentException("Player / tournament id is invalid");
+
+            var playerAssignment = db.Table<PlayerAssignments>().SingleOrDefault(a => a.PlayerId == playerGuid && a.TournamentId == tournamentGuid);
+
+            return new PlayerDto
+            {
+                Id = playerAssignment.PlayerId.ToString(),
+                TeamId = playerAssignment.TeamId.ToString(),
+                TournamentId = playerAssignment.TournamentId.ToString(),
+                Paid = playerAssignment.Paid,
+                Attendance = playerAssignment.Attendance
+            };
+        }
+
         public PlayerDto GetPlayerById(Guid playerGuid)
         {
             var player = db.Table<Players>().Where(p => p.Id == playerGuid).Single();
@@ -123,12 +146,24 @@ namespace FutsalManager.Persistence
             Guid playerId, tournamentId, teamId;
 
             if (Guid.TryParse(player.Id, out playerId) && Guid.TryParse(player.TeamId, out teamId) && Guid.TryParse(player.TournamentId, out tournamentId))
-                db.Insert(new PlayerAssignments { PlayerId = playerId, TournamentId = tournamentId, TeamId = teamId }, typeof(PlayerAssignments));
+            {
+                var count = db.Table<PlayerAssignments>().Count(p => p.TeamId == teamId && p.TournamentId == tournamentId && p.PlayerId == playerId);
+
+                if (count == 0)
+                    db.Insert(new PlayerAssignments { PlayerId = playerId, TournamentId = tournamentId, TeamId = teamId }, typeof(PlayerAssignments));
+            }
+        }
+
+        public void DeleteAllPlayerAssignments()
+        {
+            //db.DropTable<PlayerAssignments>();
+            //db.CreateTable<PlayerAssignments>();
+            db.DeleteAll<PlayerAssignments>();
         }
 
         public string AddEditPlayer(PlayerDto player)
         {
-            if (GetPlayerById(player.Id) == null)
+            if (String.IsNullOrEmpty(player.Id) || GetPlayerById(player.Id) == null)
             {
                 player.Id = Guid.NewGuid().ToString();
                 db.Insert(player.ConvertToDb(), typeof(Players));
@@ -159,7 +194,7 @@ namespace FutsalManager.Persistence
         {
             Guid tournamentGuid, teamGuid = Guid.Empty;
 
-            if (Guid.TryParse(tournamentId, out tournamentGuid) && Guid.TryParse(teamId, out teamGuid))
+            if (!Guid.TryParse(tournamentId, out tournamentGuid) || !Guid.TryParse(teamId, out teamGuid))
                 throw new ArgumentException("Tournament id or team id is invalid");
 
             var teamPlayers = db.Table<PlayerAssignments>().Where(x => x.TournamentId == tournamentGuid && x.TeamId == teamGuid);
@@ -188,7 +223,7 @@ namespace FutsalManager.Persistence
 
         public string AddEditTeam(TeamDto team)
         {
-            if (!String.IsNullOrEmpty(team.Id))
+            if (String.IsNullOrEmpty(team.Id))
             {   
                 team.Id = Guid.NewGuid().ToString();
                 db.Insert(new Teams { Id = Guid.NewGuid(), Name = team.Name }, typeof(Teams));
@@ -199,6 +234,11 @@ namespace FutsalManager.Persistence
             }
 
             return team.Id;
+        }
+
+        public void DeleteAllTeams()
+        {
+            db.DeleteAll<Teams>();
         }
 
         public void AssignTeam(string tournamentId, TeamDto team)
@@ -216,7 +256,15 @@ namespace FutsalManager.Persistence
             if (!Guid.TryParse(tournamentId, out tournamentGuid))
                 throw new ArgumentException("Tournament id is invalid");
 
-            db.Insert(new TeamAssignments { TeamId = teamGuid, TournamentId = tournamentGuid }, typeof(TeamAssignments));
+            var count = db.Table<TeamAssignments>().Count(t => t.TeamId == teamGuid && t.TournamentId == tournamentGuid);
+
+            if (count == 0)
+                db.Insert(new TeamAssignments { TeamId = teamGuid, TournamentId = tournamentGuid }, typeof(TeamAssignments));
+        }
+
+        public void DeleteAllTeamsAssignment()
+        {
+            db.DeleteAll<TeamAssignments>();
         }
 
         public TeamDto GetTeamByName(string teamName)
@@ -229,6 +277,25 @@ namespace FutsalManager.Persistence
         {
             var team = db.Table<Teams>().First(t => t.Id == teamId);
             return team.ConvertToDto();
+        }
+
+        public IEnumerable<TeamDto> GetAllTeams()
+        {
+            var teams = db.Query<Teams>("Select * from Teams");
+
+            IEnumerable<TeamDto> teamsWithNames = null;
+
+            if (teams.Any())
+            {
+                teamsWithNames = teams.ToList().ConvertAll(team =>
+                    new TeamDto
+                    {
+                        Id = team.Id.ToString(),
+                        Name = team.Name
+                    });
+            }
+
+            return teamsWithNames;
         }
 
         public IEnumerable<TeamDto> GetTeamsByTournament(string tournamentId)
@@ -268,16 +335,40 @@ namespace FutsalManager.Persistence
 
         public string AddMatch(string tournamentId, MatchDto match)
         {
+            var existingMatches = GetMatches(tournamentId);
+            
+            var matchFound = existingMatches.Where(m => m.HomeTeam.Id == match.HomeTeam.Id && m.AwayTeam.Id == match.AwayTeam.Id).ToList();
+
+            if (matchFound.Count != 0)
+                return matchFound.First().Id; // throw new ApplicationException("Match already assigned");
+
             var matchToSave = match.ConvertToDb();
 
             if (String.IsNullOrEmpty(match.Id))
                 matchToSave.Id = Guid.NewGuid();
 
             matchToSave.TournamentId = Guid.Parse(tournamentId);
-
-            db.Insert(matchToSave, typeof(Matchs));
+            
+            db.Insert(matchToSave, typeof(Matches));
 
             return matchToSave.Id.ToString();
+        }
+
+        public void UpdateMatch(MatchDto match)
+        {
+            var matchToSave = match.ConvertToDb();
+            db.Update(matchToSave, typeof(Matches));
+        }
+
+        public void DeleteAllMatchesByTournament(string tournamentId)
+        {
+            var matches = GetMatches(tournamentId).ToList();
+
+            for (int i = 0; i < matches.Count; i++)
+            {
+                var matchToDelete = matches[i].ConvertToDb();
+                db.Delete(matchToDelete);
+            }
         }
 
         public IEnumerable<MatchDto> GetMatches(string tournamentId)
@@ -287,9 +378,19 @@ namespace FutsalManager.Persistence
             if (!Guid.TryParse(tournamentId, out tournamentGuid))
                 throw new ArgumentException("Tournament id is invalid");
 
-            var matches = db.Table<Matchs>().Where(m => m.TournamentId == tournamentGuid);
+            var matches = db.Table<Matches>().Where(m => m.TournamentId == tournamentGuid).ToList();            
+            var matchDtos = matches.ConvertAll(m => m.ConvertToDto());
 
-            return matches.ToList().ConvertAll(m => m.ConvertToDto());
+            var teams = GetTeamsByTournament(tournamentId);
+
+            for (int i = 0; i < matchDtos.Count; i++)
+            {
+                var match = matchDtos[i];
+                match.HomeTeam = teams.Single(t => t.Id == match.HomeTeam.Id);
+                match.AwayTeam = teams.Single(t => t.Id == match.AwayTeam.Id);
+            }
+
+            return matchDtos;
         }
 
         public void AddMatchScore(string tournamentId, string matchId, string teamId, string playerId, string remark = "")
@@ -324,6 +425,35 @@ namespace FutsalManager.Persistence
 
             var scoreList = db.Table<Scores>().Where(m => m.TournamentId == tournamentGuid && m.MatchId == matchGuid);
             return scoreList.ToList().ConvertAll(s => s.ConvertToDto());
+        }
+
+        public void DeletePlayer(PlayerDto player)
+        {
+            Guid playerId = Guid.Parse(player.Id);
+
+            // check if player played in any tournament
+            var isAssigned = db.Table<PlayerAssignments>().Where(p => p.PlayerId == playerId).Any();
+
+            if (isAssigned) // update the isDeleted flag
+            {
+                player.IsDeleted = true;
+                AddEditPlayer(player);
+            }
+            else // remove the player from db permanently
+            {
+                db.Delete<Players>(playerId);
+            }
+        }
+
+        public void RunSqlStatement(string sql)
+        {
+            db.Execute(sql);
+        }
+
+        public void DeleteTournament(string tournamentId)
+        {
+            Guid tournamentGuid = Guid.Parse(tournamentId);
+            db.Delete<Tournaments>(tournamentGuid);
         }
 
         /*

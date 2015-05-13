@@ -48,12 +48,22 @@ namespace FutsalManager.Droid.Adapters
 
             string age = "??";
 
+            if (player.Name == "0")
+            {
+                view.FindViewById<TextView>(Resource.Id.nameTextView).Text = "Add new player";
+                view.FindViewById<TextView>(Resource.Id.positionTextView).Visibility = ViewStates.Invisible;
+                view.FindViewById<TextView>(Resource.Id.goalTextView).Visibility = ViewStates.Invisible;
+                return view;
+            }
+
             if (player.Age != 0)
                 age = player.Age.ToString();
 
             view.FindViewById<TextView>(Resource.Id.nameTextView).Text = player.Name + " (" + age + ")";
             view.FindViewById<TextView>(Resource.Id.positionTextView).Text = player.Position;
             view.FindViewById<TextView>(Resource.Id.goalTextView).Text = "Goals: 0";
+            view.FindViewById<TextView>(Resource.Id.positionTextView).Visibility = ViewStates.Visible;
+            view.FindViewById<TextView>(Resource.Id.goalTextView).Visibility = ViewStates.Visible;
 
             return view;
         }

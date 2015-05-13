@@ -56,8 +56,10 @@
     <Compile Include="Entity\Team.cs" />
     <Compile Include="Entity\TeamStanding.cs" />
     <Compile Include="Entity\Tournament.cs" />
-    <Compile Include="Enum\TeamSide.cs" />
+    <Compile Include="Enums\TeamSide.cs" />
+    <Compile Include="Enums\TournamentStatus.cs" />
     <Compile Include="Exceptions\ExceedTotalTeamsException.cs" />
+    <Compile Include="Exceptions\IncompleteMatchFoundException.cs" />
     <Compile Include="Exceptions\PlayerNotFoundException.cs" />
     <Compile Include="Exceptions\TeamNotFoundException.cs" />
     <Compile Include="Helpers\EntityMapper.cs" />

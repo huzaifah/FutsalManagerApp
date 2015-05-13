@@ -43,7 +43,7 @@
             p1:text="Pick a Date"
             p1:layout_width="match_parent"
             p1:layout_height="wrap_content"
-            p1:id="@+id/pickDateButton" />
+            p1:id="@+id/pickDatePlayerButton" />
         <TextView
             p1:text="Age"
             p1:layout_width="match_parent"
@@ -55,5 +55,15 @@
             p1:layout_height="wrap_content"
             p1:id="@+id/ageEditText"
             p1:enabled="false" />
+        <Button
+            p1:text="Save"
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/savePlayerButton" />
+        <Button
+            p1:text="Delete"
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/deletePlayerButton" />
     </LinearLayout>
 </ScrollView>

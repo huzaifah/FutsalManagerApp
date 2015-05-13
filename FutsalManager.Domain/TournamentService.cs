@@ -1,6 +1,6 @@
 ﻿using FutsalManager.Domain.Dtos;
 using FutsalManager.Domain.Entity;
-using FutsalManager.Domain.Enum;
+using FutsalManager.Domain.Enums;
 using FutsalManager.Domain.Exceptions;
 using FutsalManager.Domain.Helpers;
 using FutsalManager.Domain.Interfaces;
@@ -16,11 +16,13 @@ namespace FutsalManager.Domain
     {
         private readonly ITournamentRepository tournamentRepo;
         private List<PlayerDto> _players;
+        private List<TournamentDto> _tournaments;
 
         public TournamentService(ITournamentRepository repo)
         {
             tournamentRepo = repo;
             RefreshPlayerCache();
+            RefreshTournamentCache();
         }
 
         public IReadOnlyList<PlayerDto> Players
@@ -29,7 +31,7 @@ namespace FutsalManager.Domain
             {
                 if (_players == null)
                     _players = new List<PlayerDto>();
-
+                
                 return _players;
             }
         }
@@ -40,7 +42,10 @@ namespace FutsalManager.Domain
                 _players = new List<PlayerDto>();
 
             _players.Clear();
-            _players = tournamentRepo.GetAllPlayers().ToList();
+            _players = tournamentRepo.GetAllPlayers(false).ToList();
+
+            _players.Add(new PlayerDto { Name = "0" });
+            _players.OrderBy(p => p.Name);
 
             for (int i = 0; i < _players.Count; i++)
             {
@@ -51,6 +56,39 @@ namespace FutsalManager.Domain
         public PlayerDto GetPlayerByItemId(long itemId)
         {
             return _players.Single(x => x.ListItemId == itemId);
+        }
+
+        public IReadOnlyList<TournamentDto> Tournaments
+        {
+            get
+            {
+                if (_tournaments == null)
+                    _tournaments = new List<TournamentDto>();
+
+                return _tournaments;
+            }
+        }
+
+        public void RefreshTournamentCache()
+        {
+            if (_tournaments == null)
+                _tournaments = new List<TournamentDto>();
+
+            _tournaments.Clear();
+            _tournaments = tournamentRepo.GetAll().ToList();
+
+            _tournaments.Add(new TournamentDto { Id = "" });
+            _tournaments.OrderByDescending(p => p.Date);
+
+            for (int i = 0; i < _tournaments.Count; i++)
+            {
+                _tournaments[i].ListItemId = i + 1;
+            }
+        }
+
+        public TournamentDto GetTournamentByItemId(long itemId)
+        {
+            return _tournaments.Single(x => x.ListItemId == itemId);
         }
 
         public void UpdatePlayerByTournament(PlayerDto player)
@@ -75,8 +113,17 @@ namespace FutsalManager.Domain
 
             if (teamCount >= tournament.TotalTeam)
                 throw new ExceedTotalTeamsException();
-                        
-            tournamentRepo.AssignTeam(tournament.Id, team.ConvertToDto());            
+
+            var teams = tournamentRepo.GetAllTeams();
+            var teamToAssign = teams.Single(t => t.Name.Equals(team.Name, StringComparison.OrdinalIgnoreCase));
+
+            tournamentRepo.AssignTeam(tournament.Id, teamToAssign);            
+        }
+
+        public IEnumerable<TeamDto> GetAllTeams()
+        {
+            var teams = tournamentRepo.GetAllTeams();
+            return teams;
         }
 
         public void AssignPlayer(Tournament tournament, Team team, Player player)
@@ -85,6 +132,9 @@ namespace FutsalManager.Domain
 
             if (teamList.SingleOrDefault(t => t.Name == team.Name) == null)
                 throw new TeamNotFoundException();
+
+            player.TeamId = team.Id;
+            player.TournamentId = tournament.Id;
 
             tournamentRepo.AssignPlayer(player.ConvertToDto());
         }
@@ -169,12 +219,21 @@ namespace FutsalManager.Domain
         public IEnumerable<Team> RetrieveTeams(Tournament tournament)
         {
             var teamList = tournamentRepo.GetTeamsByTournament(tournament.Id);
+
+            if (teamList == null)
+                return new List<Team>();
+
             return teamList.ToList().ConvertAll(t => t.ConvertToEntity());
         }
 
         public PlayerDto GetPlayerById(string playerId)
         {
             return tournamentRepo.GetPlayerById(playerId);
+        }
+
+        public PlayerDto GetPlayerByTournament(string playerId, string tournamentId)
+        {
+            return tournamentRepo.GetPlayerStatusByTournament(playerId, tournamentId);
         }
 
         public string AddEditPlayer(PlayerDto player)
@@ -199,7 +258,9 @@ namespace FutsalManager.Domain
 
             foreach (var hometeam in teams)
             {
-                foreach (var awayteam in teams)
+                var teamsToPlay = teams.Where(t => t.Name != hometeam.Name);
+
+                foreach (var awayteam in teamsToPlay)
                 {
                     AddMatch(tournament, hometeam, awayteam);
                 }
@@ -210,8 +271,8 @@ namespace FutsalManager.Domain
         {
             var teamStandings = new List<TeamStanding>();
 
-            // find all matches
-            var matches = RetrieveMatches(tournament);
+            // find all completed matches
+            var matches = RetrieveMatches(tournament).Where(m => m.IsCompleted == true);
 
             // find all teams
             var teams = RetrieveTeams(tournament);
@@ -265,6 +326,9 @@ namespace FutsalManager.Domain
                 teamStandings.Add(teamStanding);
             }
 
+            // sort teamStandings by total points and goal difference
+            teamStandings.OrderByDescending(s => s.TotalPoints).ThenByDescending(s => s.GoalDifference);
+
             return teamStandings;
         }
 
@@ -292,16 +356,20 @@ namespace FutsalManager.Domain
                     throw new ApplicationException("Incomplete total matches for team " + standing.Team.Name);
             }
 
-            // sort teamStandings by total points
-            teamStandings.OrderByDescending(s => s.TotalPoints);
+            // sort teamStandings by total points and goal difference
+            teamStandings.OrderByDescending(s => s.TotalPoints).ThenByDescending(s => s.GoalDifference);
+
+            // assign rank to each team
+            int i = 0;
+            teamStandings.ForEach(t => t.Ranking = i++);
 
             // add final match
             if (teamStandings[0] != null && teamStandings[1] != null)
             {
                 var finalMatch = new Match
                 {
-                    HomeTeam = teamStandings[0].Team,
-                    AwayTeam = teamStandings[1].Team,
+                    HomeTeam = teamStandings.Single(t => t.Ranking == 1).Team,
+                    AwayTeam = teamStandings.Single(t => t.Ranking == 2).Team,
                     Type = "Final"
                 };
 
@@ -313,8 +381,8 @@ namespace FutsalManager.Domain
             {
                 var thirdPlacing = new Match
                 {
-                    HomeTeam = teamStandings[2].Team,
-                    AwayTeam = teamStandings[3].Team,
+                    HomeTeam = teamStandings.Single(t => t.Ranking == 3).Team,
+                    AwayTeam = teamStandings.Single(t => t.Ranking == 4).Team,
                     Type = "3rdPlacing"
                 };
 
@@ -337,6 +405,51 @@ namespace FutsalManager.Domain
             deciderMatches.Add(thirdPlacing.ConvertToDto());
 
             return deciderMatches;
+        }
+
+        public void CompleteMatch(Match match)
+        {
+            match.IsCompleted = true;
+            tournamentRepo.UpdateMatch(match.ConvertToDto());
+        }
+
+        public void EndTournament(Tournament tournament)
+        {
+            // validate if there's any incomplete matches
+            var incompleteMatches = RetrieveMatches(tournament).Where(m => m.IsCompleted == false).Count();
+            
+            if (incompleteMatches != 0)
+                throw new IncompleteMatchFoundException(String.Format("{0} matches are incomplete", incompleteMatches));
+
+            tournament.Status = TournamentStatus.Completed;
+            AddEditTournament(tournament);
+        }
+
+        public void StartTournament(Tournament tournament)
+        {
+            // change tournament status
+            tournament.Status = Domain.Enums.TournamentStatus.InProgress;            
+            AddEditTournament(tournament);
+        }
+
+        public void DeletePlayer(string playerId)
+        {
+            var player = tournamentRepo.GetPlayerById(playerId);
+
+            if (player == null)
+                throw new PlayerNotFoundException();
+
+            tournamentRepo.DeletePlayer(player);
+        }
+
+        public void DeleteTournament(string tournamentId)
+        {
+            var tournament = RetrieveTournamentById(tournamentId);
+
+            if (tournament.Status != TournamentStatus.NotStarted)
+                throw new ApplicationException("This tournament is in progress or ended. Therefore, it cannot be removed.");
+
+            tournamentRepo.DeleteTournament(tournamentId);
         }
     }
 }

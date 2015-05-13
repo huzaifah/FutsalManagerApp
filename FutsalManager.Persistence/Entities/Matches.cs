@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FutsalManager.Persistence.Entities
 {
-    public class Matchs
+    public class Matches
     {
         [PrimaryKey]
         public Guid Id { get; set; }

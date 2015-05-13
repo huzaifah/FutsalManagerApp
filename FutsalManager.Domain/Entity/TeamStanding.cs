@@ -23,5 +23,6 @@ namespace FutsalManager.Domain.Entity
         public int TotalConceded { get; set; }
         public int GoalDifference { get; set; }
         public int TotalPoints { get; set; }
+        public int Ranking { get; set; }
     }
 }

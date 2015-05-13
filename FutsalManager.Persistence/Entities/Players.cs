@@ -15,6 +15,7 @@ namespace FutsalManager.Persistence.Entities
         public string Name { get; set; }
         public string Position { get; set; }
         public DateTime BirthDate { get; set; }
+        public bool IsDeleted { get; set; }
         //public string TeamId { get; set; }
         //public string TournamentId { get; set; }
     }
