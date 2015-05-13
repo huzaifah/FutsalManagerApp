@@ -104,19 +104,17 @@
     <AndroidResource Include="Resources\layout\SelectWhiteTeam.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\MasterData.axml">
+
+    <AndroidResource Include="Resources\layout\PlayerSelector.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\TournamentListItem.axml">
+    <AndroidResource Include="Resources\layout\MatchUpdate.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\MasterDataMenu.axml">
+    <AndroidResource Include="Resources\layout\PlayerPerWeek.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\ManageTournament.axml">
-      <SubType>AndroidResource</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\layout3.axml" />
+
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
@@ -137,6 +135,7 @@
     <AndroidResource Include="Resources\drawable\ic_delete.png" />
     <AndroidResource Include="Resources\menu\TournamentSetupMenu.xml" />
     <AndroidResource Include="Resources\drawable\bobailogo.png" />
+    <AndroidResource Include="Resources\drawable\bobai.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FutsalManager.Domain\FutsalManager.Domain.csproj">
